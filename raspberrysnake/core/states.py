@@ -6,6 +6,9 @@ class State(ABC):
 		self.app = app
 		self.name = name
 
+	def onKeyPressed(event):
+		pass
+
 	def onStart(self):
 		pass
 

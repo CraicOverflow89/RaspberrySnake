@@ -29,6 +29,9 @@ class Application:
 		state = state(self)
 		state.onStart()
 
+		# Bind Events
+		app.bind("<Key>", state.onKeyPressed)
+
 		# Create Loop
 		def loop():
 
