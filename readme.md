@@ -5,12 +5,9 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 
 ### Tasks
 
- - splash screen
-    - logo
  - menu screen
-    - logo
 	- options
-	- version / info
+    - about info
  - game screen
     - graphics for snake and fruit
     - snake movement
