@@ -2,6 +2,7 @@ from entities.entity import Entity
 from graphics.images import ImageLoader
 from library.dimensions import Dimensions
 from library.direction import Direction
+from library.methods import *
 from library.point import Point
 
 class Snake(Entity):
@@ -27,7 +28,23 @@ class Snake(Entity):
 		# NOTE: tail gets longer due to fruit being eaten
 
 	def move(self):
-		pass
+
+		# Create Body
+		pos_this = self.body[0]
+		body_new = [when(self.direction, {
+			Direction.EAST: Point(pos_this.x + 1, pos_this.y),
+			Direction.NORTH: Point(pos_this.x, pos_this.y - 1),
+			Direction.SOUTH: Point(pos_this.x, pos_this.y + 1),
+			Direction.WEST: Point(pos_this.x - 1, pos_this.y)
+		})]
+
+		# Iterate Pieces
+		for x in range(len(self.body) - 1):
+			body_new.append(self.body[x])
+
+		# Update Body
+		self.body = body_new
+		self.position = self.body[0]
 
 	def render(self, gfx):
 
