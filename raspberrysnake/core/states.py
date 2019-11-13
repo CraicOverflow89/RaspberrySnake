@@ -13,10 +13,8 @@ class State(ABC):
 		pass
 
 	@abstractmethod
-	def render(self, canvas):
+	def render(self, gfx):
 		pass
-		# NOTE: should use an intermediate class that provides easy access to typical drawing methods
-		#       rather than accepting canvas and having to repeat stuff in render methods
 
 	@abstractmethod
 	def tick(self):

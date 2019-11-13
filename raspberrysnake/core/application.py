@@ -1,4 +1,6 @@
+from graphics.canvas import Graphics
 from graphics.dimensions import Dimensions
+from graphics.point import Point
 from tkinter import *
 
 class Application:
@@ -20,6 +22,9 @@ class Application:
 		canvas = Canvas(app, bg = "black", width = self.size.width, height = self.size.height, highlightthickness = 0)
 		canvas.pack()
 
+		# Create Graphics
+		gfx = Graphics(canvas)
+
 		# Initialise State
 		state = state(self)
 		state.onStart()
@@ -27,14 +32,12 @@ class Application:
 		# Create Loop
 		def loop():
 
-			# Clear Canvas
-			canvas.create_rectangle(0, 0, self.size.width, self.size.height, fill = "black")
-
-			# Invoke Tick
+			# Application Tick
 			state.tick()
 
-			# Invoke Render
-			state.render(canvas)
+			# Application Render
+			gfx.draw_rect(Point(0, 0), self.size, "black")
+			state.render(gfx)
 
 			# Schedule Loop
 			app.after(tick_ms, loop)
