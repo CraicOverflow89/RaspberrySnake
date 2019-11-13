@@ -85,3 +85,9 @@ class StateGame(State):
 			print("encountered body!")
 			sys.exit()
 			# NOTE: this obviously needs to freeze animations then update state to show final score
+
+		# NOTE: also need to handle hitting the world boundary
+
+		# Collect Fruit
+		# NOTE: match fruit entity where location is that of snake head
+		#       if match exists then collect fruit (remove it), add score and invoke snake.grow()
