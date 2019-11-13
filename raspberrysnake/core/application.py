@@ -39,7 +39,7 @@ class Application:
 			self.state.tick()
 
 			# Application Render
-			gfx.draw_rect(Point(0, 0), self.size, "black")
+			gfx.draw_rect(Point(0, 0), self.size, "black", True)
 			self.state.render(gfx)
 
 			# Schedule Loop
