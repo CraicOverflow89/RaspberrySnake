@@ -6,6 +6,9 @@ from library.dimensions import Dimensions
 from library.direction import Direction
 from library.point import Point
 
+# TEMP
+import sys
+
 class StateGame(State):
 
 	# Constants
@@ -71,5 +74,14 @@ class StateGame(State):
 
 	def tick(self):
 
+		# Game Paused
+		if self.paused is True:
+			return
+
 		# Snake Movement
-		self.snake.move()
+		if self.snake.move():
+
+			# Encountered Body
+			print("encountered body!")
+			sys.exit()
+			# NOTE: this obviously needs to freeze animations then update state to show final score
