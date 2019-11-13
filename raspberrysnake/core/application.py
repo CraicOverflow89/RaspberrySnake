@@ -34,5 +34,4 @@ class Application:
 		canvas.pack()
 
 		# Start Application
-		app.after(tick_ms, loop)
 		app.mainloop()
