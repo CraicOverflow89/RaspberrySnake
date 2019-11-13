@@ -28,13 +28,17 @@ class Graphics:
 		else:
 			self.canvas.create_rectangle(position.x, position.y, position.x + size.width, position.y + size.height, outline = colour)
 
-	def draw_text(self, text, position):
+	def draw_text(self, text, position, center = False):
 
 		# Apply Offset
 		position = position + self.offset
 
+		# Anchor Position
+		anchor = tk.NW
+		if center is True: anchor = tk.CENTER
+
 		# Render Text
-		self.canvas.create_text(position.x, position.y, text = text, font = "Inconsolata 14", fill = "white", anchor = tk.NW)
+		self.canvas.create_text(position.x, position.y, text = text, font = "Inconsolata 14", fill = "white", anchor = anchor)
 
 	def offset_graphics(self, offset):
 		return Graphics(self.canvas, self.offset + offset)
