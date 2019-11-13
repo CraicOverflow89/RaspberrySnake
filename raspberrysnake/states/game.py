@@ -1,33 +1,64 @@
+from core.application import Application
 from core.states import State
+from entities.fruit import Fruit
 from entities.snake import Snake
 from library.dimensions import Dimensions
+from library.direction import Direction
 from library.point import Point
 
 class StateGame(State):
 
+	# Constants
+	world_pos = Point(32, 48)
+	world_size = Dimensions(576, 416)
+	directional_keys = {
+		37: Direction.WEST,
+		38: Direction.NORTH,
+		39: Direction.EAST,
+		40: Direction.SOUTH
+	}
+
 	def __init__(self, app):
 		super().__init__(app, "GAME")
-		self.world_pos = Point(32, 48)
-		self.world_size = Dimensions(576, 416)
+		self.paused = False
 		self.score = 0
 		self.snake = Snake(Point(5, 3))
-		self.fruit = []
+		self.fruit = [Fruit(Point(2, 7)), Fruit(Point(9, 5))]
 
 	def onKeyPressed(self, event):
 
-		# TEMP
-		print(event)
+		# Game Paused
+		if self.paused is True:
+			if event.keycode == 13:
+				self.paused = False
+			return
+
+		# Pause Game
+		if event.keycode == 13:
+			self.paused = True
+			return
+
+		# Face Direction
+		if event.keycode in StateGame.directional_keys.keys():
+			self.snake.face(StateGame.directional_keys[event.keycode])
 
 	def render(self, gfx):
 
 		# Render Score
 		gfx.draw_text("Score %s" % self.score, Point(10, 10))
 
-		# Render Entities
-		self.render_entities(gfx.offset_graphics(self.world_pos))
+		# Game Running
+		if self.paused is False:
 
-		# Render Border
-		gfx.draw_rect(self.world_pos, self.world_size, "white", False)
+			# Render Entities
+			self.render_entities(gfx.offset_graphics(StateGame.world_pos))
+
+			# Render Border
+			gfx.draw_rect(StateGame.world_pos, StateGame.world_size, "white", False)
+
+		# Game Paused
+		else:
+			gfx.draw_text("PAUSED", Point(Application.getDimensions().width / 2, Application.getDimensions().height / 2), True)
 
 	def render_entities(self, gfx):
 
@@ -35,8 +66,8 @@ class StateGame(State):
 		self.snake.render(gfx)
 
 		# Render Fruit
-		gfx.draw_rect(Point(32 * 2, 32 * 7), Dimensions(32, 32), "red", True)
-		gfx.draw_rect(Point(32 * 9, 32 * 5), Dimensions(32, 32), "red", True)
+		for fruit in self.fruit:
+			fruit.render(gfx)
 
 	def tick(self):
 
