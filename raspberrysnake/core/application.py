@@ -7,7 +7,7 @@ class Application:
 
 		# Configure Application
 		size = Dimensions(640, 480)
-		self.tick_ms = 1000
+		tick_ms = 1000
 
 		# Create Application
 		app = Tk()
@@ -25,7 +25,7 @@ class Application:
 		def loop():
 			state.tick()
 			state.render(canvas)
-			app.after(self.tick_ms, loop)
+			app.after(tick_ms, loop)
 
 		# Initial Execution
 		loop()
@@ -34,5 +34,5 @@ class Application:
 		canvas.pack()
 
 		# Start Application
-		app.after(self.tick_ms, loop)
+		app.after(tick_ms, loop)
 		app.mainloop()
