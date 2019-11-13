@@ -1,7 +1,7 @@
 Raspberry Snake
 ===============
 
-Small game to written in Python, with the goal of playing on Raspberry Pi with game controller.
+Small game written in Python, with the goal of playing on Raspberry Pi with game controller.
 
 ### Tasks
 
