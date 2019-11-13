@@ -64,4 +64,4 @@ class Application:
 
 		# Initialise New
 		self.state = state(self)
-		self.state = state.onStart()
+		self.state.onStart()
