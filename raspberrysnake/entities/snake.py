@@ -19,32 +19,50 @@ class Snake(Entity):
 		self.body = [Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5)]
 		super().__init__(self.body[0], Dimensions(32, 32))
 		self.direction = Direction.WEST
+		self.grow_next = False
 
 	def face(self, direction):
 		self.direction = direction
 
+	def getLocation(self):
+		return self.body[0]
+
 	def grow(self):
-		pass
-		# NOTE: tail gets longer due to fruit being eaten
+		self.grow_next = True
 
 	def move(self):
 
-		# Create Body
+		# Calculate Target
 		pos_this = self.body[0]
-		body_new = [when(self.direction, {
-			Direction.EAST: Point(pos_this.x + 1, pos_this.y),
-			Direction.NORTH: Point(pos_this.x, pos_this.y - 1),
-			Direction.SOUTH: Point(pos_this.x, pos_this.y + 1),
-			Direction.WEST: Point(pos_this.x - 1, pos_this.y)
-		})]
+		target = when(self.direction, {
+			Direction.EAST: pos_this + Point(1, 0),
+			Direction.NORTH: pos_this + Point(0, -1),
+			Direction.SOUTH: pos_this + Point(0, 1),
+			Direction.WEST: pos_this + Point(-1, 0)
+		})
+
+		# Encounter Body
+		if target in self.body:
+			return True
+
+		# Create Body
+		body_new = [target]
 
 		# Iterate Pieces
 		for x in range(len(self.body) - 1):
 			body_new.append(self.body[x])
 
+		# Invoke Growth
+		if self.grow_next is True:
+			body_new.append(self.body[len(self.body) - 1])
+			self.grow_next = False
+
 		# Update Body
 		self.body = body_new
 		self.position = self.body[0]
+
+		# No Encounter
+		return False
 
 	def render(self, gfx):
 
