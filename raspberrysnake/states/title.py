@@ -1,7 +1,8 @@
 from core.states import State
 from graphics.images import ImageLoader
-from graphics.point import Point
+from library.dimensions import Dimensions
 from library.methods import *
+from library.point import Point
 from states.game import StateGame
 import sys
 
@@ -12,9 +13,6 @@ class StateTitle(State):
 		self.cursor_pos = 0
 
 	def onKeyPressed(self, event):
-
-		# TEMP
-		print(event)
 
 		# Invoke Option
 		if event.keycode == 13:

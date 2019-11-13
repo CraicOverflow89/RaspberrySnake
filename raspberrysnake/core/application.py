@@ -1,6 +1,6 @@
 from graphics.canvas import Graphics
-from graphics.dimensions import Dimensions
-from graphics.point import Point
+from library.dimensions import Dimensions
+from library.point import Point
 from tkinter import Canvas, Tk
 
 class Application:
