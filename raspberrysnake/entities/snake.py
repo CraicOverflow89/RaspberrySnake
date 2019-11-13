@@ -1,12 +1,13 @@
 from entities.entity import Entity
 from library.dimensions import Dimensions
+from library.direction import Direction
 from library.point import Point
 
 class Snake(Entity):
 
 	def __init__(self, position):
 		super().__init__(position, Dimensions(32, 32))
-		#self.direction = NORTH
+		self.direction = Direction.NORTH
 
 	def face(self, direction):
 		self.direction = direction
