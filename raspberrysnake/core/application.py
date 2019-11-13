@@ -5,32 +5,29 @@ from tkinter import Canvas, Tk
 
 class Application:
 
+	# Constants
+	version = "0.0.1"
+	size = Dimensions(640, 480)
+	tick_ms = 250
+
 	def __init__(self, state):
 
-		# Constants
-		self.version = "0.0.1"
-		self.size = Dimensions(640, 480)
-		tick_ms = 250
-
 		# Create Application
-		app = Tk()
-		app.title("Raspberry Snake")
-		app.geometry("%dx%d" % (self.size.width, self.size.height))
-		app.resizable(False, False)
+		self.app = Tk()
+		self.app.title("Raspberry Snake")
+		self.app.geometry("%dx%d" % (Application.size.width, Application.size.height))
+		self.app.resizable(False, False)
 
 		# Create Canvas
-		canvas = Canvas(app, bg = "black", width = self.size.width, height = self.size.height, highlightthickness = 0)
+		canvas = Canvas(self.app, bg = "black", width = Application.size.width, height = Application.size.height, highlightthickness = 0)
 		canvas.pack()
 
 		# Create Graphics
 		gfx = Graphics(canvas)
 
-		# Initialise State
-		self.state = state(self)
-		self.state.onStart()
-
-		# Bind Events
-		app.bind("<Key>", self.state.onKeyPressed)
+		# Initial State
+		self.state = None
+		self.stateUpdate(state)
 
 		# Create Loop
 		def loop():
@@ -43,25 +40,29 @@ class Application:
 			self.state.render(gfx)
 
 			# Schedule Loop
-			app.after(tick_ms, loop)
+			self.app.after(Application.tick_ms, loop)
 
 		# Invoke Loop
 		loop()
 
 		# Start Application
-		app.mainloop()
+		self.app.mainloop()
 
-	def getDimensions(self):
-		return self.size
+	def getDimensions():
+		return Application.size
 
-	def getVersion(self):
-		return self.version
+	def getVersion():
+		return Application.version
 
 	def stateUpdate(self, state):
 
-		# Terminate Old
-		self.state.onTerminate()
+		# Terminate Existing
+		if self.state is not None:
+			self.state.onTerminate()
 
-		# Initialise New
+		# Initialise State
 		self.state = state(self)
 		self.state.onStart()
+
+		# Bind Events
+		self.app.bind("<Key>", self.state.onKeyPressed)

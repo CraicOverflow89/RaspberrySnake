@@ -1,3 +1,4 @@
+from core.application import Application
 from core.states import State
 from graphics.images import ImageLoader
 from library.dimensions import Dimensions
@@ -42,7 +43,7 @@ class StateTitle(State):
 		self.render_options(gfx)
 
 		# Render Version
-		gfx.draw_text("Version %s" % self.app.getVersion(), Point(10, self.app.getDimensions().height - 25))
+		gfx.draw_text("Version %s" % Application.getVersion(), Point(10, Application.getDimensions().height - 25))
 
 	def render_options(self, gfx):
 
