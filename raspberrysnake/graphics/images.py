@@ -5,11 +5,9 @@ class ImageLoader:
 
 	def load(image):
 
-		# Create Image
-		result = PhotoImage(file = "resources/" + image + ".gif")
-
 		# Store Image
-		ImageLoader.data[image] = result
+		if image not in ImageLoader.data:
+			ImageLoader.data[image] = PhotoImage(file = "resources/" + image + ".gif")
 
 		# Return Image
-		return result
+		return ImageLoader.data[image]
