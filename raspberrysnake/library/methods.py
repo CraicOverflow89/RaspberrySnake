@@ -5,9 +5,11 @@ def when(value, result, fallback = None):
 
 		# Test Condition
 		if value == condition:
-			result[condition]()
-			return
+			return result[condition]
 
-	# Invoke Fallback
+	# Return Fallback
 	if fallback is not None:
 		fallback()
+
+	# Return None
+	return None

@@ -20,7 +20,7 @@ class StateTitle(State):
 				0: lambda: self.app.stateUpdate(StateGame),
 				1: lambda: print("about game"),
 				2: lambda: sys.exit()
-			})
+			})()
 			return
 
 		# Cursor Up
