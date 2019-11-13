@@ -17,7 +17,10 @@ Raspberry
 	- outline
 	   - colour #801731
 	   - border 2px
-	- shadow
-	   - none
+ - shadow
+    - none
+ - image
+    - width 320px
+	- height 160px
 	- background
-	   - transparent
+	   - colour #000000
