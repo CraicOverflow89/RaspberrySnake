@@ -1,7 +1,6 @@
 from core.states import State
 from graphics.images import ImageLoader
 from graphics.point import Point
-from tkinter import *
 
 class StateTitle(State):
 
