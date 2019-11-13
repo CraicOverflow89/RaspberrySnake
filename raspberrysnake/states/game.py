@@ -22,7 +22,7 @@ class StateGame(State):
 		super().__init__(app, "GAME")
 		self.paused = False
 		self.score = 0
-		self.snake = Snake(Point(5, 3))
+		self.snake = Snake()
 		self.fruit = [Fruit(Point(2, 7)), Fruit(Point(9, 5))]
 
 	def onKeyPressed(self, event):
