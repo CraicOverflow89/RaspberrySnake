@@ -12,5 +12,9 @@ class State(ABC):
 		pass
 
 	@abstractmethod
-	def render(self):
+	def render(self, canvas):
+		pass
+
+	@abstractmethod
+	def tick(self):
 		pass

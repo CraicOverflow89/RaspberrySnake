@@ -5,11 +5,9 @@ class Application:
 
 	def __init__(self, state):
 
-		# Initial State
-		state.onStart()
-
-		# Configure Size
+		# Configure Application
 		size = Dimensions(640, 480)
+		self.tick_ms = 1000
 
 		# Create Application
 		app = Tk()
@@ -20,11 +18,21 @@ class Application:
 		# Create Canvas
 		canvas = Canvas(app, bg = "black", width = size.width, height = size.height, highlightthickness = 0)
 
-		# State Render
-		state.render(canvas)
+		# Initial State
+		state.onStart()
+
+		# Application Loop
+		def loop():
+			state.tick()
+			state.render(canvas)
+			app.after(self.tick_ms, loop)
+
+		# Initial Execution
+		loop()
 
 		# Pack Canvas
 		canvas.pack()
 
 		# Start Application
+		app.after(self.tick_ms, loop)
 		app.mainloop()

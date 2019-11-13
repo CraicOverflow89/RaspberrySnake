@@ -11,3 +11,6 @@ class StateTitle(State):
 
 		# Create Logo
 		logo = canvas.create_image(160, 160, image = ImageLoader.load("logo"), anchor = NW)
+
+	def tick(self):
+		pass
