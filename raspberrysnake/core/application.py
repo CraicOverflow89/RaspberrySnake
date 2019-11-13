@@ -26,21 +26,21 @@ class Application:
 		gfx = Graphics(canvas)
 
 		# Initialise State
-		state = state(self)
-		state.onStart()
+		self.state = state(self)
+		self.state.onStart()
 
 		# Bind Events
-		app.bind("<Key>", state.onKeyPressed)
+		app.bind("<Key>", self.state.onKeyPressed)
 
 		# Create Loop
 		def loop():
 
 			# Application Tick
-			state.tick()
+			self.state.tick()
 
 			# Application Render
 			gfx.draw_rect(Point(0, 0), self.size, "black")
-			state.render(gfx)
+			self.state.render(gfx)
 
 			# Schedule Loop
 			app.after(tick_ms, loop)
@@ -56,3 +56,12 @@ class Application:
 
 	def getVersion(self):
 		return self.version
+
+	def stateUpdate(self, state):
+
+		# Terminate Old
+		self.state.onTerminate()
+
+		# Initialise New
+		self.state = state(self)
+		self.state = state.onStart()
