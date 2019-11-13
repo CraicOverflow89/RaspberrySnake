@@ -1,4 +1,5 @@
-from application.application import Application
+from core.application import Application
+from states.title import StateTitle
 
 # Launch Application
-Application()
+Application(StateTitle("TITLE"))

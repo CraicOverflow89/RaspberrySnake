@@ -1,10 +1,12 @@
 from graphics.dimensions import Dimensions
-from graphics.images import ImageLoader
 from tkinter import *
 
 class Application:
 
-	def __init__(self):
+	def __init__(self, state):
+
+		# Initial State
+		state.onStart()
 
 		# Configure Size
 		size = Dimensions(640, 480)
@@ -18,9 +20,8 @@ class Application:
 		# Create Canvas
 		canvas = Canvas(app, bg = "black", width = size.width, height = size.height, highlightthickness = 0)
 
-		# Create Logo
-		logo = canvas.create_image(160, 160, image = ImageLoader.load("logo"), anchor = NW)
-		# NOTE: this is where we will handle the rendering of the current state
+		# State Render
+		state.render(canvas)
 
 		# Pack Canvas
 		canvas.pack()
