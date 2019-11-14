@@ -39,6 +39,12 @@ class ArrayList():
 				return False
 		return True
 
+	def contains(self, value):
+		for element in self.value:
+			if element == value:
+				return True
+		return False
+
 	def each(self, logic):
 		for element in self.value:
 			logic(element)
