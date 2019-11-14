@@ -26,18 +26,19 @@ class Application:
 		gfx = Graphics(canvas)
 
 		# Initial State
-		self.state = None
+		self.state_active = None
+		self.state_stored = None
 		self.stateUpdate(state)
 
 		# Create Loop
 		def loop():
 
 			# Application Tick
-			self.state.tick()
+			self.state_active.tick()
 
 			# Application Render
 			gfx.draw_rect(Point(0, 0), self.size, "black", True)
-			self.state.render(gfx)
+			self.state_active.render(gfx)
 
 			# Schedule Loop
 			self.app.after(Application.tick_ms, loop)
@@ -54,15 +55,40 @@ class Application:
 	def getVersion():
 		return Application.version
 
-	def stateUpdate(self, state):
+	def stateRevert(self):
+
+		# Nothing Stored
+		if self.state_stored is None:
+			raise Exception("No stored state to revert to!")
 
 		# Terminate Existing
-		if self.state is not None:
-			self.state.onTerminate()
+		self.state_active.onTerminate()
 
-		# Initialise State
-		self.state = state(self)
-		self.state.onStart()
+		# Revert State
+		self.state_active = self.state_stored
+		self.state_active.onRevert()
+		self.state_stored = None
 
 		# Bind Events
-		self.app.bind("<Key>", self.state.onKeyPressed)
+		self.app.bind("<Key>", self.state_active.onKeyPressed)
+
+	def stateUpdate(self, state, store = False):
+
+		# Existing State
+		if self.state_active is not None:
+
+			# Store Existing
+			if store is True:
+				self.state_active.onStore()
+				self.state_stored = self.state_active
+
+			# Terminate Existing
+			else:
+				self.state_active.onTerminate()
+
+		# Initialise State
+		self.state_active = state(self)
+		self.state_active.onStart()
+
+		# Bind Events
+		self.app.bind("<Key>", self.state_active.onKeyPressed)
