@@ -52,6 +52,12 @@ class ArrayList():
 				return element
 		return None
 
+	def get(self, position):
+		return self.value[position]
+
+	def isEmpty(self):
+		return len(self.value) > 0
+
 	def map(self, logic):
 		result = []
 		for element in self.value:
@@ -70,6 +76,9 @@ class ArrayList():
 			if not logic(element):
 				result.append(element)
 		return ArrayList(result)
+
+	def size(self):
+		return len(self.value)
 
 	def take(self, count):
 		if len(self.value) < count:
