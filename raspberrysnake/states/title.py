@@ -2,10 +2,8 @@ from core.application import Application
 from core.states import State
 from graphics.alignment import Align
 from graphics.images import ImageLoader
+from graphics.menu import Menu
 from library.dimensions import Dimensions
-from library.list import ArrayList
-from library.methods import *
-from library.pair import Pair
 from library.point import Point
 from states.about import StateAbout
 from states.game import StateGame
@@ -16,58 +14,35 @@ class StateTitle(State):
 
 	def __init__(self, app):
 		super().__init__(app, "TITLE")
-		self.menu_option = ArrayList(Pair("Classic Mode", Point(290, 260)), Pair("How to Play", Point(290, 290)), Pair("About", Point(290, 320)), Pair("Exit", Point(290, 350)))
-		self.menu_active = 0
+		self.menu = Menu()
+		self.menu.add_option("Classic Mode", Point(290, 260), lambda: self.app.stateUpdate(StateGame))
+		self.menu.add_option("How to Play", Point(290, 290), lambda: self.app.stateUpdate(StateInstructions, True))
+		self.menu.add_option("About", Point(290, 320), lambda: self.app.stateUpdate(StateAbout, True))
+		self.menu.add_option("Exit", Point(290, 350), lambda: sys.exit())
 
-	def onKeyPressed(self, event):
+	def on_key_pressed(self, event):
 
-		# Invoke Option
-		if event.keycode == 13:
-			when(self.menu_active, {
-				0: lambda: self.app.stateUpdate(StateGame),
-				1: lambda: self.app.stateUpdate(StateInstructions, True),
-				2: lambda: self.app.stateUpdate(StateAbout, True),
-				3: lambda: sys.exit()
-			})()
-			return
-
-		# Cursor Up
-		if event.keycode == 38:
-			if self.menu_active > 0: self.menu_active -= 1
-			return
-
-		# Cursor Down
-		if event.keycode == 40:
-			if self.menu_active < self.menu_option.size() - 1: self.menu_active += 1
-			return
+		# Menu Events
+		self.menu.on_key_pressed(event)
 
 	def onRevert(self, data):
 
 		# Reset Cursor
-		self.menu_active = 0
+		self.menu.set_cursor()
 
 	def render(self, gfx):
 
 		# Render Logo
 		gfx.draw_image(ImageLoader.load("logo"), Point(160, 40))
 
-		# Render Options
-		self.render_options(gfx)
+		# Render Menu
+		self.menu.render(gfx)
 
 		# Render Version
 		gfx.draw_text("Version %s" % Application.getVersion(), Point(10, Application.getDimensions().height - 25))
 
 		# Render Hint
 		gfx.draw_text("Press UP/DOWN to navigate, ENTER to select.", Point(Application.getDimensions().width - 10, Application.getDimensions().height - 25), Align.RIGHT)
-
-	def render_options(self, gfx):
-
-		# Render Cursor
-		cursor_point = self.menu_option.get(self.menu_active).second
-		gfx.draw_text("->", Point(cursor_point.x - 30, cursor_point.y))
-
-		# Render Text
-		self.menu_option.each(lambda it: gfx.draw_text(it.first, it.second))
 
 	def tick(self):
 		pass

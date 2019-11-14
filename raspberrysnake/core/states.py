@@ -6,19 +6,19 @@ class State(ABC):
 		self.app = app
 		self.name = name
 
-	def onKeyPressed(event):
+	def on_key_pressed(event):
 		pass
 
-	def onRevert(self, data):
+	def on_revert(self, data):
 		pass
 
-	def onStart(self, data):
+	def on_start(self, data):
 		pass
 
-	def onStore(self):
+	def on_store(self):
 		pass
 
-	def onTerminate(self):
+	def on_terminate(self):
 		pass
 
 	@abstractmethod

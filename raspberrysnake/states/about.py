@@ -1,6 +1,7 @@
 from core.application import Application
 from core.states import State
 from graphics.alignment import Align
+from graphics.menu import Menu
 from library.point import Point
 
 class StateAbout(State):
@@ -19,7 +20,7 @@ class StateAbout(State):
 		self.info.append("Repository")
 		self.info.append("https://github.com/CraicOverflow89/RaspberrySnake/")
 
-	def onKeyPressed(self, event):
+	def on_key_pressed(self, event):
 
 		# Title State
 		self.app.stateRevert()

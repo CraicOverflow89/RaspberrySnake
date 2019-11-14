@@ -70,15 +70,15 @@ class Application:
 			raise Exception("No stored state to revert to!")
 
 		# Terminate Existing
-		self.state_active.onTerminate()
+		self.state_active.on_terminate()
 
 		# Revert State
 		self.state_active = self.state_stored
-		self.state_active.onRevert(data)
+		self.state_active.on_revert(data)
 		self.state_stored = None
 
 		# Bind Events
-		self.app.bind("<Key>", self.state_active.onKeyPressed)
+		self.app.bind("<Key>", self.state_active.on_key_pressed)
 
 	def stateUpdate(self, state, store = False, data = None):
 
@@ -87,16 +87,16 @@ class Application:
 
 			# Store Existing
 			if store is True:
-				self.state_active.onStore()
+				self.state_active.on_store()
 				self.state_stored = self.state_active
 
 			# Terminate Existing
 			else:
-				self.state_active.onTerminate()
+				self.state_active.on_terminate()
 
 		# Initialise State
 		self.state_active = state(self)
-		self.state_active.onStart(data)
+		self.state_active.on_start(data)
 
 		# Bind Events
-		self.app.bind("<Key>", self.state_active.onKeyPressed)
+		self.app.bind("<Key>", self.state_active.on_key_pressed)

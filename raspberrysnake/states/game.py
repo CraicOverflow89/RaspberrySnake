@@ -57,7 +57,7 @@ class StateGame(State):
 		# Create Fruit
 		self.fruit.add(Fruit(spawn_point))
 
-	def onKeyPressed(self, event):
+	def on_key_pressed(self, event):
 
 		# Game Paused
 		if self.paused is True:
