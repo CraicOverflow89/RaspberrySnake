@@ -1,4 +1,3 @@
-from core.application import Application
 from core.states import State
 from graphics.alignment import Align
 from library.point import Point
@@ -34,10 +33,10 @@ class StateInstructions(State):
 			gfx.draw_text(self.info[x], Point(25, x * 30 + 100))
 
 		# Render Version
-		gfx.draw_text("Version %s" % Application.get_version(), Point(10, Application.get_dimensions().height - 25))
+		gfx.draw_text("Version %s" % self.app.get_version(), Point(10, self.app.get_dimensions().height - 25))
 
 		# Render Hint
-		gfx.draw_text("Press any key to return to title.", Point(Application.get_dimensions().width - 10, Application.get_dimensions().height - 25), Align.RIGHT)
+		gfx.draw_text("Press any key to return to title.", Point(self.app.get_dimensions().width - 10, self.app.get_dimensions().height - 25), Align.RIGHT)
 
 	def tick(self):
 		pass

@@ -1,4 +1,3 @@
-from core.application import Application
 from core.states import State
 from entities.fruit import Fruit
 from entities.snake import Snake
@@ -8,7 +7,6 @@ from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
 from library.point import Point
-from states.results import StateResults
 import random
 import time
 
@@ -87,7 +85,7 @@ class StateGame(State):
 
 		# Game Paused
 		else:
-			gfx.draw_text("PAUSED", Point(Application.get_dimensions().width / 2, Application.get_dimensions().height / 2), Align.CENTER)
+			gfx.draw_text("PAUSED", Point(self.app.get_dimensions().width / 2, self.app.get_dimensions().height / 2), Align.CENTER)
 
 	def render_game(self, gfx):
 
@@ -110,11 +108,11 @@ class StateGame(State):
 		if self.snake.tick():
 
 			# Snake Collision
-			self.app.state_update(StateResults, False, {
+			self.app.state_update("RESULTS", False, {
 				"score": self.score,
 				"time": time.time() - self.time_s
 			})
-			# NOTE: this obviously needs to freeze animations then update state to show final score
+			# NOTE: would be betteer to freeze animations for a moment before updating state
 
 		# Encounter Fruit
 		fruit_match = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())

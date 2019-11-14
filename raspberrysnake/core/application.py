@@ -1,6 +1,11 @@
 from graphics.canvas import Graphics
 from library.dimensions import Dimensions
 from library.point import Point
+from states.about import StateAbout
+from states.game import StateGame
+from states.instructions import StateInstructions
+from states.results import StateResults
+from states.title import StateTitle
 from tkinter import Canvas, Tk
 import time
 
@@ -10,8 +15,19 @@ class Application:
 	version = "0.0.1"
 	size = Dimensions(640, 480)
 	tick_ms = 250
+	state_create = {
+		"ABOUT": StateAbout,
+		"GAME": StateGame,
+		"INSTRUCTIONS": StateInstructions,
+		"RESULTS": StateResults,
+		"TITLE": StateTitle
+	}
 
 	def __init__(self, state):
+
+		# State Management
+		self.state_active = None
+		self.state_stored = None
 
 		# Create Application
 		self.app = Tk()
@@ -27,8 +43,6 @@ class Application:
 		gfx = Graphics(canvas)
 
 		# Initial State
-		self.state_active = None
-		self.state_stored = None
 		self.state_update(state)
 
 		# Create Loop
@@ -57,10 +71,10 @@ class Application:
 		# Start Application
 		self.app.mainloop()
 
-	def get_dimensions():
+	def get_dimensions(self):
 		return Application.size
 
-	def get_version():
+	def get_version(self):
 		return Application.version
 
 	def state_revert(self, data = None):
@@ -95,7 +109,7 @@ class Application:
 				self.state_active.on_terminate()
 
 		# Initialise State
-		self.state_active = state(self)
+		self.state_active = Application.state_create[state](self)
 		self.state_active.on_start(data)
 
 		# Bind Events
