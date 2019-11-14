@@ -82,6 +82,13 @@ class ArrayList():
 				result.append(element)
 		return ArrayList(result)
 
+	def remove(self, value):
+		result = []
+		for element in self.value:
+			if element != value:
+				result.append(element)
+		return ArrayList(result)
+
 	def size(self):
 		return len(self.value)
 
