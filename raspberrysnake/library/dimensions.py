@@ -15,3 +15,6 @@ class Dimensions:
 
 	def __truediv__(self, value):
 		return Dimensions(self.width / value, self.height / value)
+
+	def contains(self, point):
+		return point.x >= 0 and point.x <= self.width and point.y >= 0 and point.y <= self.height
