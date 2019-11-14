@@ -41,7 +41,7 @@ class StateTitle(State):
 			if self.menu_active < self.menu_option.size() - 1: self.menu_active += 1
 			return
 
-	def onRevert(self):
+	def onRevert(self, data):
 
 		# Reset Cursor
 		self.menu_active = 0

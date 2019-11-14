@@ -9,10 +9,10 @@ class State(ABC):
 	def onKeyPressed(event):
 		pass
 
-	def onRevert(self):
+	def onRevert(self, data):
 		pass
 
-	def onStart(self):
+	def onStart(self, data):
 		pass
 
 	def onStore(self):

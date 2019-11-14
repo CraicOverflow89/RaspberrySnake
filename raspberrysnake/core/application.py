@@ -63,7 +63,7 @@ class Application:
 	def getVersion():
 		return Application.version
 
-	def stateRevert(self):
+	def stateRevert(self, data = None):
 
 		# Nothing Stored
 		if self.state_stored is None:
@@ -74,13 +74,13 @@ class Application:
 
 		# Revert State
 		self.state_active = self.state_stored
-		self.state_active.onRevert()
+		self.state_active.onRevert(data)
 		self.state_stored = None
 
 		# Bind Events
 		self.app.bind("<Key>", self.state_active.onKeyPressed)
 
-	def stateUpdate(self, state, store = False):
+	def stateUpdate(self, state, store = False, data = None):
 
 		# Existing State
 		if self.state_active is not None:
@@ -96,7 +96,7 @@ class Application:
 
 		# Initialise State
 		self.state_active = state(self)
-		self.state_active.onStart()
+		self.state_active.onStart(data)
 
 		# Bind Events
 		self.app.bind("<Key>", self.state_active.onKeyPressed)
