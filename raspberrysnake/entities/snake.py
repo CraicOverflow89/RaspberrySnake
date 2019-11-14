@@ -2,6 +2,7 @@ from entities.entity import Entity
 from graphics.images import ImageLoader
 from library.dimensions import Dimensions
 from library.direction import Direction
+from library.list import ArrayList
 from library.methods import *
 from library.point import Point
 
@@ -23,15 +24,18 @@ class Snake(Entity):
 
 	def __init__(self, world):
 		self.world = world
-		self.body = [Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5)]
+		self.body = ArrayList(Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5))
 		self.direction = Direction.WEST
 		self.direction_next = None
 		self.grow_next = False
-		super().__init__(self.body[0], Dimensions(32, 32))
+		super().__init__(self.body.get(0), Dimensions(32, 32))
 
 	def face(self, direction):
 		if direction != Snake.direction_opposite[self.direction]:
 			self.direction_next = direction
+
+	def getPositionList(self):
+		return self.body
 
 	def grow(self):
 		self.grow_next = True
@@ -54,18 +58,18 @@ class Snake(Entity):
 			gfx.draw_image(ImageLoader.load("snake/%s" % image), Point(position.x * self.size.width, position.y * self.size.height))
 
 		# Render Head
-		render_piece("head_%s" % Snake.direction_map[self.direction], self.body[0])
+		render_piece("head_%s" % Snake.direction_map[self.direction], self.body.get(0))
 
 		# Render Body
-		for x in range(1, len(self.body) - 1):
-			pos_this = self.body[x]
-			char_prev = Snake.direction_map[direction_to(pos_this, self.body[x - 1])]
-			char_next = Snake.direction_map[direction_to(pos_this, self.body[x + 1])]
+		for x in range(1, self.body.size() - 1):
+			pos_this = self.body.get(x)
+			char_prev = Snake.direction_map[direction_to(pos_this, self.body.get(x - 1))]
+			char_next = Snake.direction_map[direction_to(pos_this, self.body.get(x + 1))]
 			render_piece("body_%s" % "".join(sorted((char_prev, char_next))), pos_this)
 
 		# Render Tail
-		pos_this = self.body[len(self.body) - 1]
-		pos_prev = self.body[len(self.body) - 2]
+		pos_this = self.body.get(self.body.size() - 1)
+		pos_prev = self.body.get(self.body.size() - 2)
 		render_piece("tail_%s" % Snake.direction_map[direction_to(pos_this, pos_prev)], pos_this)
 
 	def tick(self):
@@ -76,7 +80,7 @@ class Snake(Entity):
 			self.direction_next = None
 
 		# Calculate Target
-		pos_this = self.body[0]
+		pos_this = self.body.get(0)
 		target = when(self.direction, {
 			Direction.EAST: pos_this + Point(1, 0),
 			Direction.NORTH: pos_this + Point(0, -1),
@@ -96,18 +100,18 @@ class Snake(Entity):
 		body_new = [target]
 
 		# Iterate Pieces
-		for x in range(len(self.body) - 1):
-			body_new.append(self.body[x])
-			# NOTE: might be better to say [target].addAll(body[up to grow_next ? 1 : -1])
+		for x in range(self.body.size() - 1):
+			body_new.append(self.body.get(x))
+			# NOTE: might be better to say [target].addAll(body.take(up to grow_next ? size : size -1))
 
 		# Invoke Growth
 		if self.grow_next is True:
-			body_new.append(self.body[len(self.body) - 1])
+			body_new.append(self.body.get(self.body.size() - 1))
 			self.grow_next = False
 
 		# Update Body
-		self.body = body_new
-		self.position = self.body[0]
+		self.body = ArrayList(body_new)
+		self.position = self.body.get(0)
 
 		# No Encounter
 		return False

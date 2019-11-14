@@ -1,3 +1,4 @@
+from library.list import ArrayList
 from library.point import Point
 
 class World:
@@ -7,6 +8,13 @@ class World:
 
 	def getDimensions(self):
 		return self.size
+
+	def getPositionList(self):
+		result = []
+		for x in range(self.size.width):
+			for y in range(self.size.height):
+				result.append(Point(x, y))
+		return ArrayList(result)
 
 	def render(self, gfx):
 
