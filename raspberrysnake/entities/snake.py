@@ -98,6 +98,7 @@ class Snake(Entity):
 		# Iterate Pieces
 		for x in range(len(self.body) - 1):
 			body_new.append(self.body[x])
+			# NOTE: might be better to say [target].addAll(body[up to grow_next ? 1 : -1])
 
 		# Invoke Growth
 		if self.grow_next is True:
