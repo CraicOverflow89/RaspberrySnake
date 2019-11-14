@@ -3,7 +3,6 @@ from graphics.images import ImageLoader
 from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
-from library.methods import *
 from library.point import Point
 
 class Snake(Entity):
