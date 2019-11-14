@@ -6,6 +6,9 @@ class Entity(ABC):
 		self.position = position
 		self.size = size
 
+	def getPosition(self):
+		return self.position
+
 	@abstractmethod
 	def render(self, gfx):
 		pass
