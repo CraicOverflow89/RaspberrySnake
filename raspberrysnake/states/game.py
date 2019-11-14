@@ -8,10 +8,9 @@ from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
 from library.point import Point
+from states.results import StateResults
 import random
-
-# TEMP
-import sys
+import time
 
 class StateGame(State):
 
@@ -26,6 +25,7 @@ class StateGame(State):
 
 	def __init__(self, app):
 		super().__init__(app, "GAME")
+		self.time_s = time.time()
 		self.world = World(Dimensions(18, 13))
 		self.paused = False
 		self.score = 0
@@ -110,7 +110,10 @@ class StateGame(State):
 		if self.snake.tick():
 
 			# Snake Collision
-			sys.exit()
+			self.app.stateUpdate(StateResults, False, {
+				"score": self.score,
+				"time": time.time() - self.time_s
+			})
 			# NOTE: this obviously needs to freeze animations then update state to show final score
 
 		# Encounter Fruit
