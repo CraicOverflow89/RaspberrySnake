@@ -14,7 +14,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 
 ### Issues
 
- - the x offset of -30 is hardcoded inside the MenuItem class
+ - repetition of alternative keycode checks (use enum instead)
 
 ### Notes
 
