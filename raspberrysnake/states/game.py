@@ -18,7 +18,11 @@ class StateGame(State):
 		37: Direction.WEST,
 		38: Direction.NORTH,
 		39: Direction.EAST,
-		40: Direction.SOUTH
+		40: Direction.SOUTH,
+		111: Direction.NORTH,
+		113: Direction.WEST,
+		114: Direction.EAST,
+		116: Direction.SOUTH
 	}
 
 	def __init__(self, app):
@@ -72,12 +76,12 @@ class StateGame(State):
 
 		# Game Paused
 		if self.paused is True:
-			if event.keycode == 13:
+			if event.keycode == 13 or event.keycode == 36:
 				self.paused = False
 			return
 
 		# Pause Game
-		if event.keycode == 13:
+		if event.keycode == 13 or event.keycode == 36:
 			self.paused = True
 			return
 

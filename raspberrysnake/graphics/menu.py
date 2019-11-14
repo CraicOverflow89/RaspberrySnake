@@ -13,17 +13,17 @@ class Menu:
 	def on_key_pressed(self, event):
 
 		# Invoke Option
-		if event.keycode == 13:
+		if event.keycode == 13 or event.keycode == 36:
 			self.option.get(self.active).invoke()
 			return
 
 		# Cursor Up
-		if event.keycode == 38:
+		if event.keycode == 38 or event.keycode == 111:
 			if self.active > 0: self.active -= 1
 			return
 
 		# Cursor Down
-		if event.keycode == 40:
+		if event.keycode == 40 or event.keycode == 116:
 			if self.active < self.option.size() - 1: self.active += 1
 			return
 
