@@ -35,7 +35,7 @@ class StateGame(State):
 	def fruit_collect(self, fruit):
 
 		# Update Score
-		self.score += fruit.getScore()
+		self.score += fruit.get_score()
 
 		# Snake Grow
 		self.snake.grow()
@@ -49,9 +49,9 @@ class StateGame(State):
 	def fruit_spawn(self):
 
 		# Spawn Locations
-		snake_point = self.snake.getPositionList()
-		fruit_point = self.fruit.map(lambda it: it.getPosition())
-		spawn_point = self.world.getPositionList().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
+		snake_point = self.snake.get_position_list()
+		fruit_point = self.fruit.map(lambda it: it.get_position())
+		spawn_point = self.world.get_position_list().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
 		spawn_point = spawn_point.get(random.randint(0, spawn_point.size() - 1))
 
 		# Create Fruit
@@ -87,7 +87,7 @@ class StateGame(State):
 
 		# Game Paused
 		else:
-			gfx.draw_text("PAUSED", Point(Application.getDimensions().width / 2, Application.getDimensions().height / 2), Align.CENTER)
+			gfx.draw_text("PAUSED", Point(Application.get_dimensions().width / 2, Application.get_dimensions().height / 2), Align.CENTER)
 
 	def render_game(self, gfx):
 
@@ -110,12 +110,12 @@ class StateGame(State):
 		if self.snake.tick():
 
 			# Snake Collision
-			self.app.stateUpdate(StateResults, False, {
+			self.app.state_update(StateResults, False, {
 				"score": self.score,
 				"time": time.time() - self.time_s
 			})
 			# NOTE: this obviously needs to freeze animations then update state to show final score
 
 		# Encounter Fruit
-		fruit_match = self.fruit.first(lambda it: it.getPosition() == self.snake.getPosition())
+		fruit_match = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())
 		if(fruit_match is not None): self.fruit_collect(fruit_match)

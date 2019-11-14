@@ -15,7 +15,7 @@ class Fruit(Entity):
 			image = Fruit.image_list[random.randint(0, len(Fruit.image_list)) - 1]
 		self.image = image
 
-	def getScore(self):
+	def get_score(self):
 		return 50
 		# NOTE: basic score for now
 

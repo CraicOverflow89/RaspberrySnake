@@ -6,10 +6,10 @@ class World:
 	def __init__(self, size):
 		self.size = size
 
-	def getDimensions(self):
+	def get_dimensions(self):
 		return self.size
 
-	def getPositionList(self):
+	def get_position_list(self):
 		result = []
 		for x in range(self.size.width):
 			for y in range(self.size.height):

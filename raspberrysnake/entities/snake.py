@@ -34,7 +34,7 @@ class Snake(Entity):
 		if direction != Snake.direction_opposite[self.direction]:
 			self.direction_next = direction
 
-	def getPositionList(self):
+	def get_position_list(self):
 		return self.body
 
 	def grow(self):
@@ -93,7 +93,7 @@ class Snake(Entity):
 			return True
 
 		# Encounter Boundary
-		if not (self.world.getDimensions() - 1).contains(target):
+		if not (self.world.get_dimensions() - 1).contains(target):
 			return True
 
 		# Create Body
@@ -102,7 +102,7 @@ class Snake(Entity):
 		# Iterate Pieces
 		for x in range(self.body.size() - 1):
 			body_new.append(self.body.get(x))
-			# NOTE: might be better to say [target].addAll(body.take(up to grow_next ? size : size -1))
+			# NOTE: might be better to say [target].add_all(body.take(up to grow_next ? size : size -1))
 
 		# Invoke Growth
 		if self.grow_next is True:

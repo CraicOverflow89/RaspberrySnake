@@ -28,7 +28,7 @@ class ArrayList():
 		result.append(value)
 		return ArrayList(result)
 
-	def addAll(self, value):
+	def add_all(self, value):
 		result = self.value
 		for element in value:
 			result.append(element)
@@ -67,7 +67,7 @@ class ArrayList():
 	def get(self, position):
 		return self.value[position]
 
-	def isEmpty(self):
+	def is_empty(self):
 		return len(self.value) > 0
 
 	def map(self, logic):
@@ -107,7 +107,7 @@ class ArrayList():
 			result.append(self.value[x])
 		return ArrayList(result)
 
-	def toList(self, count):
+	def to_list(self, count):
 		result = []
 		for element in self.value:
 			result.append(element)

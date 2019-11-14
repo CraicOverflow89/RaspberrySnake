@@ -10,8 +10,8 @@ class StateResults(State):
 
 		# Create Menu
 		self.menu = Menu()
-		self.menu.add_option("Retry", Point(290, 260), lambda: self.app.stateUpdate(StateGame))
-		self.menu.add_option("Title", Point(290, 290), lambda: self.app.stateUpdate(StateTitle))
+		self.menu.add_option("Retry", Point(290, 260), lambda: self.app.state_update(StateGame))
+		self.menu.add_option("Title", Point(290, 290), lambda: self.app.state_update(StateTitle))
 
 	def on_key_pressed(self, event):
 
@@ -36,10 +36,10 @@ class StateResults(State):
 		self.menu.render(gfx)
 
 		# Render Version
-		gfx.draw_text("Version %s" % Application.getVersion(), Point(10, Application.getDimensions().height - 25))
+		gfx.draw_text("Version %s" % Application.get_version(), Point(10, Application.get_dimensions().height - 25))
 
 		# Render Hint
-		gfx.draw_text("Press UP/DOWN to navigate, ENTER to select.", Point(Application.getDimensions().width - 10, Application.getDimensions().height - 25), Align.RIGHT)
+		gfx.draw_text("Press UP/DOWN to navigate, ENTER to select.", Point(Application.get_dimensions().width - 10, Application.get_dimensions().height - 25), Align.RIGHT)
 
 	def tick(self):
 		pass

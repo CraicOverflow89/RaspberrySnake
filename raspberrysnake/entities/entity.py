@@ -6,7 +6,7 @@ class Entity(ABC):
 		self.position = position
 		self.size = size
 
-	def getPosition(self):
+	def get_position(self):
 		return self.position
 
 	@abstractmethod

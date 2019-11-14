@@ -29,7 +29,7 @@ class Application:
 		# Initial State
 		self.state_active = None
 		self.state_stored = None
-		self.stateUpdate(state)
+		self.state_update(state)
 
 		# Create Loop
 		def loop():
@@ -57,13 +57,13 @@ class Application:
 		# Start Application
 		self.app.mainloop()
 
-	def getDimensions():
+	def get_dimensions():
 		return Application.size
 
-	def getVersion():
+	def get_version():
 		return Application.version
 
-	def stateRevert(self, data = None):
+	def state_revert(self, data = None):
 
 		# Nothing Stored
 		if self.state_stored is None:
@@ -80,7 +80,7 @@ class Application:
 		# Bind Events
 		self.app.bind("<Key>", self.state_active.on_key_pressed)
 
-	def stateUpdate(self, state, store = False, data = None):
+	def state_update(self, state, store = False, data = None):
 
 		# Existing State
 		if self.state_active is not None:
