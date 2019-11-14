@@ -4,6 +4,12 @@ import tkinter as tk
 
 class Graphics:
 
+	# Constants
+	text_default = {
+		"font": "Inconsolata 14",
+		"colour": "white"
+	}
+
 	def __init__(self, canvas, offset = Point(0, 0)):
 		self.canvas = canvas
 		self.offset = offset
@@ -30,7 +36,7 @@ class Graphics:
 		else:
 			self.canvas.create_rectangle(position.x, position.y, position.x + size.width, position.y + size.height, outline = colour)
 
-	def draw_text(self, text, position, align = Align.LEFT):
+	def draw_text(self, text, position, align = Align.LEFT, font = None, colour = None):
 
 		# Apply Offset
 		position = position + self.offset
@@ -42,8 +48,14 @@ class Graphics:
 			Align.RIGHT: tk.NE
 		}[align]
 
+		# Default Font
+		if font is None: font = Graphics.text_default["font"]
+
+		# Default Colour
+		if colour is None: colour = Graphics.text_default["colour"]
+
 		# Render Text
-		self.canvas.create_text(position.x, position.y, text = text, font = "Inconsolata 14", fill = "white", anchor = anchor)
+		self.canvas.create_text(position.x, position.y, text = text, font = font, fill = colour, anchor = anchor)
 
 	def offset_graphics(self, offset):
 		return Graphics(self.canvas, self.offset + offset)
