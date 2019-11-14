@@ -28,9 +28,14 @@ class StateResults(State):
 		# Render Title
 		gfx.draw_text("RESULTS", Point(25, 25), Align.LEFT, "Inconsolata 22")
 
+		# Render Celebration
+		if self.data["highest"] is True:
+			gfx.draw_text("NEW HIGHSCORE!!", Point(self.app.get_dimensions().width - 25, 25), Align.RIGHT, "Inconsolata 22")
+
 		# Render Info
-		gfx.draw_text("Score: %d" % self.data["score"], Point(25, 100))
-		gfx.draw_text("Time:  %ds" % self.data["time"], Point(25, 130))
+		gfx.draw_text("Time:  %ds" % self.data["time"], Point(25, 100))
+		gfx.draw_text("Score: %d" % self.data["score"], Point(25, 130))
+		gfx.draw_text("Best:  %d" % self.app.get_score(), Point(25, 160))
 
 		# Render Menu
 		self.menu.render(gfx)

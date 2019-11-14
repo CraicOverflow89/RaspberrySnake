@@ -30,6 +30,19 @@ class StateGame(State):
 		self.snake = Snake(self.world)
 		self.fruit = ArrayList(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
 
+	def finish(self):
+		# NOTE: would be better to freeze animations for a moment before updating state
+
+		# Record Score
+		new_highscore = self.app.new_score(self.score)
+
+		# Results State
+		self.app.state_update("RESULTS", False, {
+			"score": self.score,
+			"time": time.time() - self.time_s,
+			"highest": new_highscore
+		})
+
 	def fruit_collect(self, fruit):
 
 		# Update Score
@@ -108,11 +121,7 @@ class StateGame(State):
 		if self.snake.tick():
 
 			# Snake Collision
-			self.app.state_update("RESULTS", False, {
-				"score": self.score,
-				"time": time.time() - self.time_s
-			})
-			# NOTE: would be betteer to freeze animations for a moment before updating state
+			self.finish()
 
 		# Encounter Fruit
 		fruit_match = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())

@@ -22,6 +22,7 @@ class Application:
 		"RESULTS": StateResults,
 		"TITLE": StateTitle
 	}
+	highscore = 0
 
 	def __init__(self, state):
 
@@ -74,8 +75,17 @@ class Application:
 	def get_dimensions(self):
 		return Application.size
 
+	def get_score(self):
+		return Application.highscore
+
 	def get_version(self):
 		return Application.version
+
+	def new_score(self, value):
+		if value > Application.highscore:
+			Application.highscore = value
+			return True
+		return False
 
 	def state_revert(self, data = None):
 
