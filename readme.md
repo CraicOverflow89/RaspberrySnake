@@ -13,7 +13,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 
 ### Issues
 
- - improve the frame rate control (just impose minimum wait time from previous including tick and render)
+ - none
 
 ### Notes
 

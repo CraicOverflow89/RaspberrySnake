@@ -2,6 +2,7 @@ from graphics.canvas import Graphics
 from library.dimensions import Dimensions
 from library.point import Point
 from tkinter import Canvas, Tk
+import time
 
 class Application:
 
@@ -33,6 +34,9 @@ class Application:
 		# Create Loop
 		def loop():
 
+			# Timer Start
+			loop_time = (time.time() * 1000)
+
 			# Application Tick
 			self.state_active.tick()
 
@@ -41,7 +45,11 @@ class Application:
 			self.state_active.render(gfx)
 
 			# Schedule Loop
-			self.app.after(Application.tick_ms, loop)
+			loop_time = (time.time() * 1000) - loop_time
+			loop_wait = 0
+			if loop_time < Application.tick_ms:
+				loop_wait = Application.tick_ms - loop_time
+			self.app.after(int(loop_wait), loop)
 
 		# Invoke Loop
 		loop()
