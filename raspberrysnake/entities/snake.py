@@ -21,54 +21,20 @@ class Snake(Entity):
 		Direction.WEST: Direction.EAST
 	}
 
-	def __init__(self):
+	def __init__(self, world):
+		self.world = world
 		self.body = [Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5)]
-		super().__init__(self.body[0], Dimensions(32, 32))
 		self.direction = Direction.WEST
+		self.direction_next = None
 		self.grow_next = False
+		super().__init__(self.body[0], Dimensions(32, 32))
 
 	def face(self, direction):
-		if direction != direction_opposite[self.direction]: self.direction = direction
-
-	def getLocation(self):
-		return self.body[0]
+		if direction != Snake.direction_opposite[self.direction]:
+			self.direction_next = direction
 
 	def grow(self):
 		self.grow_next = True
-
-	def move(self):
-
-		# Calculate Target
-		pos_this = self.body[0]
-		target = when(self.direction, {
-			Direction.EAST: pos_this + Point(1, 0),
-			Direction.NORTH: pos_this + Point(0, -1),
-			Direction.SOUTH: pos_this + Point(0, 1),
-			Direction.WEST: pos_this + Point(-1, 0)
-		})
-
-		# Encounter Body
-		if target in self.body:
-			return True
-
-		# Create Body
-		body_new = [target]
-
-		# Iterate Pieces
-		for x in range(len(self.body) - 1):
-			body_new.append(self.body[x])
-
-		# Invoke Growth
-		if self.grow_next is True:
-			body_new.append(self.body[len(self.body) - 1])
-			self.grow_next = False
-
-		# Update Body
-		self.body = body_new
-		self.position = self.body[0]
-
-		# No Encounter
-		return False
 
 	def render(self, gfx):
 
@@ -101,3 +67,46 @@ class Snake(Entity):
 		pos_this = self.body[len(self.body) - 1]
 		pos_prev = self.body[len(self.body) - 2]
 		render_piece("tail_%s" % Snake.direction_map[direction_to(pos_this, pos_prev)], pos_this)
+
+	def tick(self):
+
+		# Update Direction
+		if self.direction_next is not None:
+			self.direction = self.direction_next
+			self.direction_next = None
+
+		# Calculate Target
+		pos_this = self.body[0]
+		target = when(self.direction, {
+			Direction.EAST: pos_this + Point(1, 0),
+			Direction.NORTH: pos_this + Point(0, -1),
+			Direction.SOUTH: pos_this + Point(0, 1),
+			Direction.WEST: pos_this + Point(-1, 0)
+		})
+
+		# Encounter Body
+		if target in self.body:
+			return True
+
+		# Encounter Boundary
+		if not (self.world.getDimensions() - 1).contains(target):
+			return True
+
+		# Create Body
+		body_new = [target]
+
+		# Iterate Pieces
+		for x in range(len(self.body) - 1):
+			body_new.append(self.body[x])
+
+		# Invoke Growth
+		if self.grow_next is True:
+			body_new.append(self.body[len(self.body) - 1])
+			self.grow_next = False
+
+		# Update Body
+		self.body = body_new
+		self.position = self.body[0]
+
+		# No Encounter
+		return False

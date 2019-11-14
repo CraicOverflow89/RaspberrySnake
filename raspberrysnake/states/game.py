@@ -2,6 +2,7 @@ from core.application import Application
 from core.states import State
 from entities.fruit import Fruit
 from entities.snake import Snake
+from entities.world import World
 from library.dimensions import Dimensions
 from library.direction import Direction
 from library.point import Point
@@ -13,7 +14,6 @@ class StateGame(State):
 
 	# Constants
 	world_pos = Point(32, 48)
-	world_size = Dimensions(18, 13)
 	directional_keys = {
 		37: Direction.WEST,
 		38: Direction.NORTH,
@@ -23,9 +23,10 @@ class StateGame(State):
 
 	def __init__(self, app):
 		super().__init__(app, "GAME")
+		self.world = World(Dimensions(18, 13))
 		self.paused = False
 		self.score = 0
-		self.snake = Snake()
+		self.snake = Snake(self.world)
 		self.fruit = [Fruit(Point(2, 7)), Fruit(Point(9, 5))]
 
 	def onKeyPressed(self, event):
@@ -53,17 +54,14 @@ class StateGame(State):
 		# Game Running
 		if self.paused is False:
 
-			# Render Entities
-			self.render_entities(gfx.offset_graphics(StateGame.world_pos))
-
-			# Render Border
-			gfx.draw_rect(StateGame.world_pos, StateGame.world_size * 32, "white", False)
+			# Render Game
+			self.render_game(gfx.offset_graphics(StateGame.world_pos))
 
 		# Game Paused
 		else:
 			gfx.draw_text("PAUSED", Point(Application.getDimensions().width / 2, Application.getDimensions().height / 2), True)
 
-	def render_entities(self, gfx):
+	def render_game(self, gfx):
 
 		# Render Snake
 		self.snake.render(gfx)
@@ -72,21 +70,21 @@ class StateGame(State):
 		for fruit in self.fruit:
 			fruit.render(gfx)
 
+		# Render World
+		self.world.render(gfx)
+
 	def tick(self):
 
 		# Game Paused
 		if self.paused is True:
 			return
 
-		# Snake Movement
-		if self.snake.move():
+		# Snake Tick
+		if self.snake.tick():
 
-			# Encountered Body
-			print("encountered body!")
+			# Snake Collision
 			sys.exit()
 			# NOTE: this obviously needs to freeze animations then update state to show final score
-
-		# NOTE: also need to handle hitting the world boundary
 
 		# Collect Fruit
 		# NOTE: match fruit entity where location is that of snake head
