@@ -5,8 +5,6 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 
 ### Tasks
 
- - menu screen
-    - how to play
  - game screen
     - better graphics for snake
     - better graphics for fruit

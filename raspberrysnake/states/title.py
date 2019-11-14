@@ -9,13 +9,14 @@ from library.pair import Pair
 from library.point import Point
 from states.about import StateAbout
 from states.game import StateGame
+from states.instructions import StateInstructions
 import sys
 
 class StateTitle(State):
 
 	def __init__(self, app):
 		super().__init__(app, "TITLE")
-		self.menu_option = ArrayList(Pair("Start", Point(290, 260)), Pair("Instructions", Point(290, 290)), Pair("About", Point(290, 320)), Pair("Exit", Point(290, 350)))
+		self.menu_option = ArrayList(Pair("Classic Mode", Point(290, 260)), Pair("How to Play", Point(290, 290)), Pair("About", Point(290, 320)), Pair("Exit", Point(290, 350)))
 		self.menu_active = 0
 
 	def onKeyPressed(self, event):
@@ -24,7 +25,7 @@ class StateTitle(State):
 		if event.keycode == 13:
 			when(self.menu_active, {
 				0: lambda: self.app.stateUpdate(StateGame),
-				1: lambda: print("how to play"),
+				1: lambda: self.app.stateUpdate(StateInstructions, True),
 				2: lambda: self.app.stateUpdate(StateAbout, True),
 				3: lambda: sys.exit()
 			})()

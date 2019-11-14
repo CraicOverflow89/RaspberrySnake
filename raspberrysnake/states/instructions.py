@@ -3,21 +3,21 @@ from core.states import State
 from graphics.alignment import Align
 from library.point import Point
 
-class StateAbout(State):
+class StateInstructions(State):
 
 	def __init__(self, app):
-		super().__init__(app, "ABOUT")
+		super().__init__(app, "INSTRUCTIONS")
 
 		# Create Information
 		self.info = []
-		self.info.append("Python3: 3.8.0")
-		self.info.append("Tkinter: 8.6")
+		self.info.append("Movement")
+		self.info.append("Press the UP/DOWN/LEFT/RIGHT keys to alter direction.")
 		self.info.append("")
-		self.info.append("Created: 13/11/2019")
-		self.info.append("Updated: 14/11/2019")
+		self.info.append("Fruit")
+		self.info.append("Collect fruit to build up the highest score you can.")
 		self.info.append("")
-		self.info.append("Repository")
-		self.info.append("https://github.com/CraicOverflow89/RaspberrySnake/")
+		self.info.append("Collision")
+		self.info.append("It's game over if you hit the your tail or the boundary.")
 
 	def onKeyPressed(self, event):
 
@@ -27,7 +27,7 @@ class StateAbout(State):
 	def render(self, gfx):
 
 		# Render Title
-		gfx.draw_text("ABOUT", Point(25, 25), Align.LEFT, "Inconsolata 22")
+		gfx.draw_text("HOW TO PLAY", Point(25, 25), Align.LEFT, "Inconsolata 22")
 
 		# Render Info
 		for x in range(len(self.info)):
