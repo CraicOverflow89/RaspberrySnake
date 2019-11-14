@@ -20,4 +20,4 @@ class Fruit(Entity):
 		# NOTE: basic score for now
 
 	def render(self, gfx):
-		gfx.draw_image(ImageLoader.load("fruit/%s" % self.image), Point(self.position.x * self.size.width, self.position.y * self.size.height))
+		gfx.draw_image(ImageLoader.load("fruit/%s" % self.image), self.position * Point(self.size.width, self.size.height))

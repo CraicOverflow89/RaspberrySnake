@@ -3,12 +3,16 @@ from library.point import Point
 
 class Menu:
 
-	def __init__(self):
+	def __init__(self, offset = Point(-30, 0)):
 		self.option = ArrayList()
 		self.active = 0
+		self.offset = offset
 
 	def add_option(self, label, position, logic):
 		self.option = self.option.add(MenuItem(self, label, position, logic))
+
+	def get_offset(self):
+		return self.offset
 
 	def on_key_pressed(self, event):
 
@@ -51,7 +55,7 @@ class MenuItem():
 		self.logic()
 
 	def render_cursor(self, gfx):
-		gfx.draw_text("->", Point(self.position.x - 30, self.position.y))
+		gfx.draw_text("->", self.position + self.menu.get_offset())
 
 	def render_label(self, gfx):
 		gfx.draw_text(self.label, self.position)

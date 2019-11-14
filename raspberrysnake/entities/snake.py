@@ -55,7 +55,7 @@ class Snake(Entity):
 
 		# Render Logic
 		def render_piece(image, position):
-			gfx.draw_image(ImageLoader.load("snake/%s" % image), Point(position.x * self.size.width, position.y * self.size.height))
+			gfx.draw_image(ImageLoader.load("snake/%s" % image), position * Point(self.size.width, self.size.height))
 
 		# Render Head
 		render_piece("head_%s" % Snake.direction_map[self.direction], self.body.get(0))
