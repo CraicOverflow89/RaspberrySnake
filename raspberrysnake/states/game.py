@@ -68,8 +68,7 @@ class StateGame(State):
 		self.snake.render(gfx)
 
 		# Render Fruit
-		for fruit in self.fruit:
-			fruit.render(gfx)
+		self.fruit.each(lambda it: it.render(gfx))
 
 		# Render World
 		self.world.render(gfx)

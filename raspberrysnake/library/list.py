@@ -39,6 +39,11 @@ class ArrayList():
 				return False
 		return True
 
+	def each(self, logic):
+		for element in self.value:
+			logic(element)
+		return self
+
 	def filter(self, logic):
 		result = []
 		for element in self.value:
