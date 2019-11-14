@@ -81,12 +81,12 @@ class Snake(Entity):
 
 		# Calculate Target
 		pos_this = self.body.get(0)
-		target = when(self.direction, {
+		target = {
 			Direction.EAST: pos_this + Point(1, 0),
 			Direction.NORTH: pos_this + Point(0, -1),
 			Direction.SOUTH: pos_this + Point(0, 1),
 			Direction.WEST: pos_this + Point(-1, 0)
-		})
+		}[self.direction]
 
 		# Encounter Body
 		if target in self.body:
