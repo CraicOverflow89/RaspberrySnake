@@ -10,7 +10,6 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
  - game screen
     - graphics for fruit
     - better graphics for snake
-    - fruit spawning
  - result screen
     - display latest and highest
     - save highest score to file

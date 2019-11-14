@@ -7,6 +7,7 @@ from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
 from library.point import Point
+import random
 
 # TEMP
 import sys
@@ -29,6 +30,23 @@ class StateGame(State):
 		self.score = 0
 		self.snake = Snake(self.world)
 		self.fruit = ArrayList(Fruit(Point(2, 7)), Fruit(Point(9, 5)))
+
+	def fruit_collect(self, fruit):
+
+		# Update Score
+		self.score += fruit.getScore()
+
+		# Snake Grow
+		self.snake.grow()
+
+		# Remove Fruit
+		self.fruit = self.fruit.remove(fruit)
+
+		# Spawn Fruit
+		snake_point = self.snake.getPositionList()
+		fruit_point = self.fruit.map(lambda it: it.getPosition())
+		spawn_point = self.world.getPositionList().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
+		self.fruit.add(Fruit(spawn_point.get(random.randint(0, spawn_point.size()))))
 
 	def onKeyPressed(self, event):
 
@@ -88,16 +106,4 @@ class StateGame(State):
 
 		# Encounter Fruit
 		fruit_match = self.fruit.first(lambda it: it.getPosition() == self.snake.getPosition())
-		if(fruit_match is not None):
-
-			# Update Score
-			self.score += fruit_match.getScore()
-
-			# Snake Grow
-			self.snake.grow()
-
-			# Remove Fruit
-			self.fruit = self.fruit.remove(fruit_match)
-
-			# Spawn Fruit
-			# NOTE: can fruit spawn at other times in the game (not just after some is eaten?)
+		if(fruit_match is not None): self.fruit_collect(fruit_match)
