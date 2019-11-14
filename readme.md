@@ -9,7 +9,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
     - better graphics for snake
     - better graphics for fruit
  - result screen
-    - display latest and highest score
+    - highest score
 
 ### Issues
 
