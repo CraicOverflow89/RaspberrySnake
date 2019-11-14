@@ -13,7 +13,7 @@ class StateGame(State):
 
 	# Constants
 	world_pos = Point(32, 48)
-	world_size = Dimensions(576, 416)
+	world_size = Dimensions(18, 13)
 	directional_keys = {
 		37: Direction.WEST,
 		38: Direction.NORTH,
@@ -57,7 +57,7 @@ class StateGame(State):
 			self.render_entities(gfx.offset_graphics(StateGame.world_pos))
 
 			# Render Border
-			gfx.draw_rect(StateGame.world_pos, StateGame.world_size, "white", False)
+			gfx.draw_rect(StateGame.world_pos, StateGame.world_size * 32, "white", False)
 
 		# Game Paused
 		else:
