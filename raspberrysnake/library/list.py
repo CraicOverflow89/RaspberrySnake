@@ -6,6 +6,18 @@ class ArrayList():
 		self.value = []
 		for element in value:
 			self.value.append(element)
+		self.iter_pos = 0
+
+	def __iter__(self):
+		self.iter_pos = 0
+		return self
+
+	def __next__(self):
+		if self.iter_pos == len(self.value):
+			raise StopIteration
+		result = self.value[self.iter_pos]
+		self.iter_pos += 1
+		return result
 
 	def __str__(self):
 		return "[" + ", ".join(map(lambda it: "'" + str(it) + "'", self.value)) + "]"
