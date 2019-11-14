@@ -14,6 +14,12 @@ class Snake(Entity):
 		Direction.SOUTH: "S",
 		Direction.WEST: "W"
 	}
+	direction_opposite = {
+		Direction.EAST: Direction.WEST,
+		Direction.NORTH: Direction.SOUTH,
+		Direction.SOUTH: Direction.NORTH,
+		Direction.WEST: Direction.EAST
+	}
 
 	def __init__(self):
 		self.body = [Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5)]
@@ -22,7 +28,7 @@ class Snake(Entity):
 		self.grow_next = False
 
 	def face(self, direction):
-		self.direction = direction
+		if direction != direction_opposite[self.direction]: self.direction = direction
 
 	def getLocation(self):
 		return self.body[0]
