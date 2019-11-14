@@ -5,6 +5,7 @@ from entities.snake import Snake
 from entities.world import World
 from library.dimensions import Dimensions
 from library.direction import Direction
+from library.list import ArrayList
 from library.point import Point
 
 # TEMP
@@ -27,7 +28,7 @@ class StateGame(State):
 		self.paused = False
 		self.score = 0
 		self.snake = Snake(self.world)
-		self.fruit = [Fruit(Point(2, 7)), Fruit(Point(9, 5))]
+		self.fruit = ArrayList(Fruit(Point(2, 7)), Fruit(Point(9, 5)))
 
 	def onKeyPressed(self, event):
 
@@ -86,6 +87,8 @@ class StateGame(State):
 			sys.exit()
 			# NOTE: this obviously needs to freeze animations then update state to show final score
 
-		# Collect Fruit
-		# NOTE: match fruit entity where location is that of snake head
-		#       if match exists then collect fruit (remove it), add score and invoke snake.grow()
+		# Encounter Fruit
+		fruit_match = self.fruit.first(lambda it: it.getPosition() == self.snake.getPosition())
+		if(fruit_match is not None):
+			print("COLLECTED FRUIT!!")
+			# NOTE: collect fruit (remove it), add score and invoke snake.grow()
