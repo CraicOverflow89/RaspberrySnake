@@ -9,10 +9,9 @@ class Fruit(Entity):
 		#self.image = image
 		# NOTE: maybe have a fruit type enum with mapped images
 
-	def collect(self):
-		pass
-		# NOTE: need to provide score (is this variable?) and kill this
-		#       although that will be done from without
+	def getScore(self):
+		return 50
+		# NOTE: basic score for now
 
 	def render(self, gfx):
 		gfx.draw_rect(Point(self.position.x * self.size.width, self.position.y * self.size.height), self.size, "red", True)

@@ -89,5 +89,15 @@ class StateGame(State):
 		# Encounter Fruit
 		fruit_match = self.fruit.first(lambda it: it.getPosition() == self.snake.getPosition())
 		if(fruit_match is not None):
-			print("COLLECTED FRUIT!!")
-			# NOTE: collect fruit (remove it), add score and invoke snake.grow()
+
+			# Update Score
+			self.score += fruit_match.getScore()
+
+			# Snake Grow
+			self.snake.grow()
+
+			# Remove Fruit
+			self.fruit = self.fruit.remove(fruit_match)
+
+			# Spawn Fruit
+			# NOTE: can fruit spawn at other times in the game (not just after some is eaten?)
