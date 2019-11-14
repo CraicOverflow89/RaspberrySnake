@@ -6,13 +6,13 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 ### Tasks
 
  - menu screen
+    - how to play
     - about info
  - game screen
-    - graphics for fruit
     - better graphics for snake
+    - better graphics for fruit
  - result screen
     - display latest and highest
-    - save highest score to file
 
 ### Issues
 
