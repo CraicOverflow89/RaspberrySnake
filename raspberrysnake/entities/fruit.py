@@ -7,7 +7,7 @@ import random
 class Fruit(Entity):
 
 	# Constants
-	image_list = ["apple_G", "apple_R"]
+	image_list = ["apple_G", "apple_R", "banana_Y"]
 
 	def __init__(self, position, image = None):
 		super().__init__(position, Dimensions(32, 32))
