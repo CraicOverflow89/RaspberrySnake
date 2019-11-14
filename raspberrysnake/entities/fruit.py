@@ -1,17 +1,23 @@
 from entities.entity import Entity
+from graphics.images import ImageLoader
 from library.dimensions import Dimensions
 from library.point import Point
+import random
 
 class Fruit(Entity):
 
-	def __init__(self, position):
+	# Constants
+	image_list = ["apple_G", "apple_R"]
+
+	def __init__(self, position, image = None):
 		super().__init__(position, Dimensions(32, 32))
-		#self.image = image
-		# NOTE: maybe have a fruit type enum with mapped images
+		if image is None:
+			image = Fruit.image_list[random.randint(0, len(Fruit.image_list)) - 1]
+		self.image = image
 
 	def getScore(self):
 		return 50
 		# NOTE: basic score for now
 
 	def render(self, gfx):
-		gfx.draw_rect(Point(self.position.x * self.size.width, self.position.y * self.size.height), self.size, "red", True)
+		gfx.draw_image(ImageLoader.load("fruit/%s" % self.image), Point(self.position.x * self.size.width, self.position.y * self.size.height))

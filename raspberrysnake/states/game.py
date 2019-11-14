@@ -29,7 +29,7 @@ class StateGame(State):
 		self.paused = False
 		self.score = 0
 		self.snake = Snake(self.world)
-		self.fruit = ArrayList(Fruit(Point(2, 7)), Fruit(Point(9, 5)))
+		self.fruit = ArrayList(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
 
 	def fruit_collect(self, fruit):
 
@@ -43,10 +43,18 @@ class StateGame(State):
 		self.fruit = self.fruit.remove(fruit)
 
 		# Spawn Fruit
+		self.fruit_spawn()
+
+	def fruit_spawn(self):
+
+		# Spawn Locations
 		snake_point = self.snake.getPositionList()
 		fruit_point = self.fruit.map(lambda it: it.getPosition())
 		spawn_point = self.world.getPositionList().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
-		self.fruit.add(Fruit(spawn_point.get(random.randint(0, spawn_point.size()))))
+		spawn_point = spawn_point.get(random.randint(0, spawn_point.size() - 1))
+
+		# Create Fruit
+		self.fruit.add(Fruit(spawn_point))
 
 	def onKeyPressed(self, event):
 
