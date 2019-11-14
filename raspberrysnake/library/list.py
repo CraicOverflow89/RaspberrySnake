@@ -1,12 +1,13 @@
 class ArrayList():
 
 	def __init__(self, *value):
-		if isinstance(value[0], list) and len(value) == 1:
-			value = value[0]
 		self.value = []
-		for element in value:
-			self.value.append(element)
 		self.iter_pos = 0
+		if len(value) > 0:
+			if isinstance(value[0], list) and len(value) == 1:
+				value = value[0]
+			for element in value:
+				self.value.append(element)
 
 	def __iter__(self):
 		self.iter_pos = 0
