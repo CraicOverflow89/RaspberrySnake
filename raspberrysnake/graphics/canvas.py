@@ -1,3 +1,4 @@
+from graphics.alignment import Align
 from library.point import Point
 import tkinter as tk
 
@@ -8,6 +9,7 @@ class Graphics:
 		self.offset = offset
 
 	def draw_image(self, image, position):
+		# NOTE: could add optional Align argument
 
 		# Apply Offset
 		position = position + self.offset
@@ -28,14 +30,17 @@ class Graphics:
 		else:
 			self.canvas.create_rectangle(position.x, position.y, position.x + size.width, position.y + size.height, outline = colour)
 
-	def draw_text(self, text, position, center = False):
+	def draw_text(self, text, position, align = Align.LEFT):
 
 		# Apply Offset
 		position = position + self.offset
 
 		# Anchor Position
-		anchor = tk.NW
-		if center is True: anchor = tk.CENTER
+		anchor = {
+			Align.LEFT: tk.NW,
+			Align.CENTER: tk.CENTER,
+			Align.RIGHT: tk.NE
+		}[align]
 
 		# Render Text
 		self.canvas.create_text(position.x, position.y, text = text, font = "Inconsolata 14", fill = "white", anchor = anchor)

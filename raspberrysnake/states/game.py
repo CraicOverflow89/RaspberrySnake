@@ -3,6 +3,7 @@ from core.states import State
 from entities.fruit import Fruit
 from entities.snake import Snake
 from entities.world import World
+from graphics.alignment import Align
 from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
@@ -86,7 +87,7 @@ class StateGame(State):
 
 		# Game Paused
 		else:
-			gfx.draw_text("PAUSED", Point(Application.getDimensions().width / 2, Application.getDimensions().height / 2), True)
+			gfx.draw_text("PAUSED", Point(Application.getDimensions().width / 2, Application.getDimensions().height / 2), Align.CENTER)
 
 	def render_game(self, gfx):
 
