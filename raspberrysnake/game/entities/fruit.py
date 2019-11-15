@@ -1,4 +1,4 @@
-from entities.entity import Entity
+from game.entities.entity import Entity
 from graphics.images import ImageLoader
 from library.dimensions import Dimensions
 from library.point import Point
