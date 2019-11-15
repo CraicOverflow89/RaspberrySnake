@@ -36,6 +36,9 @@ class State(ABC):
 	def render(self, gfx):
 		pass
 
+	def render_hint(self, gfx, value):
+		gfx.draw_text(value, Point(10, self.app.get_dimensions().height - 25), Align.LEFT, "Inconsolata 12")
+
 	def render_title(self, gfx, value):
 		gfx.draw_text(value, Point(25, 25), Align.LEFT, "Inconsolata 22", "#E62959", "#801731")
 

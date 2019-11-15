@@ -40,11 +40,8 @@ class StateResults(State):
 		# Render Menu
 		self.menu.render(gfx)
 
-		# Render Version
-		gfx.draw_text("Version %s" % self.app.get_version(), Point(10, self.app.get_dimensions().height - 25))
-
 		# Render Hint
-		gfx.draw_text("Press UP/DOWN to navigate, ENTER to select.", Point(self.app.get_dimensions().width - 10, self.app.get_dimensions().height - 25), Align.RIGHT)
+		self.render_hint(gfx, "Press UP/DOWN to navigate, ENTER to select.")
 
 	def tick(self):
 		pass

@@ -32,11 +32,8 @@ class StateInstructions(State):
 		for x in range(len(self.info)):
 			gfx.draw_text(self.info[x], Point(25, x * 30 + 100))
 
-		# Render Version
-		gfx.draw_text("Version %s" % self.app.get_version(), Point(10, self.app.get_dimensions().height - 25))
-
 		# Render Hint
-		gfx.draw_text("Press any key to return to title.", Point(self.app.get_dimensions().width - 10, self.app.get_dimensions().height - 25), Align.RIGHT)
+		self.render_hint(gfx, "Press any key to return to title.")
 
 	def tick(self):
 		pass
