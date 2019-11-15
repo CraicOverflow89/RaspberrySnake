@@ -17,7 +17,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 
 ### Issues
 
- - repetition of alternative keycode checks (use enum instead)
+ - exit option works when using keyboard but seems to freeze when using controller (need to manually kill things?)
 
 ### Notes
 
