@@ -2,7 +2,6 @@ from core.states import State
 from game.entities.fruit import Fruit
 from game.entities.obstacle import Obstacle
 from game.entities.snake import Snake
-from game.type import GameType
 from game.world import World
 from graphics.alignment import Align
 from library.dimensions import Dimensions
@@ -29,7 +28,6 @@ class StateGame(State):
 
 	def __init__(self, app):
 		super().__init__(app, "GAME")
-		self.game_type = None
 		self.time_s = None
 		self.paused = False
 		self.finish = False
@@ -48,8 +46,7 @@ class StateGame(State):
 		self.fruit = self.fruit.add_all(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
 
 		# Create Obstacles
-		if self.game_type == GameType.UPDATED:
-			self.obstacle = self.obstacle.add_all(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
+		self.obstacle = self.obstacle.add_all(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
 
 	def end_game(self):
 
@@ -60,7 +57,7 @@ class StateGame(State):
 		new_highscore = self.app.new_score(self.score)
 
 		# Create Event
-		self.add_event(2000, lambda: self.app.state_update("RESULTS", False, {
+		self.add_event(1500, lambda: self.app.state_update("RESULTS", False, {
 			"score": self.score,
 			"time": time.time() - self.time_s,
 			"highest": new_highscore
@@ -117,9 +114,6 @@ class StateGame(State):
 			self.snake.face(StateGame.directional_keys[event.keycode])
 
 	def on_start(self, data):
-
-		# Game Type
-		self.game_type = data["type"]
 
 		# Create Entities
 		self.create_entities()
