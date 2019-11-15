@@ -1,4 +1,5 @@
 from input.action import Action
+from library.list import ArrayList
 from threading import Event, Thread
 import pygame
 
@@ -7,6 +8,9 @@ class Controller:
 	def __init__(self, app):
 		self.app = app
 
+		# Action Queue
+		self.action_queue = ArrayList()
+
 		# Detect Controller
 		pygame.init()
 		pygame.joystick.init()
@@ -14,34 +18,44 @@ class Controller:
 
 			# Create Listener
 			pygame.joystick.Joystick(0).init()
-			self.halt = Event()
-			self.thread = Thread(target = self.listener, args = (), daemon = False)
-			self.thread.start()
+			self.listener_halt = Event()
+			self.listener_thread = Thread(target = self.listener, args = (self.listener_halt, self.action_queue), daemon = False)
+			self.listener_thread.start()
 
-	def listener(self):
+	def add_action(self, action):
+		self.action_queue = self.action_queue.add(action)
+
+	def get_actions(self):
+
+		# Create Result
+		result = self.action_queue.copy()
+
+		# Empty Queue
+		self.action_queue = ArrayList()
+
+		# Return Actions
+		return result
+
+	def listener(self, halt, queue):
 		while True:
-			if self.halt.is_set():
+			if halt.is_set():
 				break
 			for event in pygame.event.get():
 				if event.type == pygame.JOYBUTTONDOWN and event.button == 1:
-					self.app.action(Action.ACTION)
+					self.add_action(Action.ACTION)
 				elif event.type == pygame.JOYAXISMOTION and (event.axis == 0 or event.axis == 1):
 					if event.axis == 0:
 						if event.value >= 0.8:
-							self.app.action(Action.RIGHT)
+							self.add_action(Action.RIGHT)
 						elif event.value <= -0.8:
-							self.app.action(Action.LEFT)
+							self.add_action(Action.LEFT)
 					elif event.axis == 1:
 						if event.value >= 0.8:
-							self.app.action(Action.DOWN)
+							self.add_action(Action.DOWN)
 						elif event.value <= -0.8:
-							self.app.action(Action.UP)
+							self.add_action(Action.UP)
 
 	def terminate(self):
-		pygame.joystick.Joystick(0).quit()
-		self.halt.set()
-		# NOTE: if controller was used to perform this action then it causes issues
-		#       and the thread is unable to join (but works fine if keyboard called it)
-		#self.thread.join()
-		pygame.joystick.quit()
+		self.listener_halt.set()
+		self.listener_thread.join()
 		pygame.quit()

@@ -65,6 +65,9 @@ class Application:
 			# Timer Start
 			loop_time = (time.time() * 1000)
 
+			# Controller Actions
+			self.controller.get_actions().each(lambda it: self.action(it))
+
 			# Application Tick
 			self.state_active.tick()
 			self.state_active.tick_event()
@@ -150,6 +153,10 @@ class Application:
 		self.state_bind()
 
 	def terminate(self):
+
+		# Already Terminating
+		if self.running is False:
+			return
 
 		# Application Status
 		self.running = False
