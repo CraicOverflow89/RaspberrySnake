@@ -24,20 +24,3 @@ $ sudo apt-get install ds4svr
 # wireless connection (before game)
 $ sudo ds4svr
 ```
-
-### Tasks
-
- - game screen
-    - better graphics for snake
-    - better graphics for fruit
- - audio
-    - background music
-    - sounds effects (eat fruit, collision, menu move/select)
-
-### Issues
-
- - exit option works when using keyboard but seems to freeze when using controller (need to manually kill things?)
-
-### Notes
-
- - snake should be comprised of colours `#366E9D` and `#FFD84D`
