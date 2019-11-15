@@ -27,7 +27,7 @@ class StateAbout(State):
 	def render(self, gfx):
 
 		# Render Title
-		gfx.draw_text("ABOUT", Point(25, 25), Align.LEFT, "Inconsolata 22")
+		self.render_title(gfx, "ABOUT")
 
 		# Render Info
 		for x in range(len(self.info)):

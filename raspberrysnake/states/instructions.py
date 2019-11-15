@@ -26,7 +26,7 @@ class StateInstructions(State):
 	def render(self, gfx):
 
 		# Render Title
-		gfx.draw_text("HOW TO PLAY", Point(25, 25), Align.LEFT, "Inconsolata 22")
+		self.render_title(gfx, "HOW TO PLAY")
 
 		# Render Info
 		for x in range(len(self.info)):

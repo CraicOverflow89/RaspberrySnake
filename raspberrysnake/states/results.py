@@ -26,7 +26,7 @@ class StateResults(State):
 	def render(self, gfx):
 
 		# Render Title
-		gfx.draw_text("RESULTS", Point(25, 25), Align.LEFT, "Inconsolata 22")
+		self.render_title(gfx, "RESULTS")
 
 		# Render Celebration
 		if self.data["highest"] is True:
