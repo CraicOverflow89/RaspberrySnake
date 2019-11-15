@@ -47,7 +47,17 @@ class GameEngine:
 		self.fruit_spawn(3)
 
 		# Create Obstacles
-		self.obstacle = self.obstacle.add_all(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
+		self.obstacle_spawn(6)
+
+	def empty_locations(self):
+
+		# Occupied Locations
+		snake_point = self.snake.get_position_list()
+		fruit_point = self.fruit.map(lambda it: it.get_position())
+		obstacle_point = self.obstacle.map(lambda it: it.get_position())
+
+		# Empty Locations
+		return self.world.get_position_list().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
 
 	def end_game(self):
 
@@ -81,10 +91,7 @@ class GameEngine:
 	def fruit_spawn(self, count = 1):
 
 		# Spawn Locations
-		snake_point = self.snake.get_position_list()
-		fruit_point = self.fruit.map(lambda it: it.get_position())
-		obstacle_point = self.obstacle.map(lambda it: it.get_position())
-		spawn_point = self.world.get_position_list().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
+		spawn_point = self.empty_locations()
 
 		# Create Fruit
 		for x in range(count):
@@ -94,6 +101,17 @@ class GameEngine:
 
 	def is_obstacle(self, point):
 		return self.obstacle.any(lambda it: it.get_position() == point)
+
+	def obstacle_spawn(self, count = 1):
+
+		# Spawn Locations
+		spawn_point = self.empty_locations()
+
+		# Create Obstacles
+		for x in range(count):
+			spawn_final = spawn_point.get(random.randint(0, spawn_point.size() - 1))
+			spawn_point = spawn_point.remove(spawn_final)
+			self.obstacle.add(Obstacle(spawn_final))
 
 	def on_key_pressed(self, event):
 

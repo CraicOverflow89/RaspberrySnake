@@ -19,6 +19,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 
  - repetition of alternative keycode checks (use enum instead)
  - graphical issue when hitting boundary after moving alongside it (don't render new direction)
+ - nothing stopping new entities spawning directly in front of snake (don't consider location in front to be empty)
 
 ### Notes
 
