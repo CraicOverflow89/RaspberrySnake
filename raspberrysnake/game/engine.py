@@ -99,6 +99,14 @@ class GameEngine:
 			spawn_point = spawn_point.remove(spawn_final)
 			self.fruit.add(Fruit(spawn_final))
 
+	def get_position_adjacent(self, position, direction):
+		return {
+			Direction.EAST: position + Point(1, 0),
+			Direction.NORTH: position + Point(0, -1),
+			Direction.SOUTH: position + Point(0, 1),
+			Direction.WEST: position + Point(-1, 0)
+		}[direction]
+
 	def is_obstacle(self, point):
 		return self.obstacle.any(lambda it: it.get_position() == point)
 
