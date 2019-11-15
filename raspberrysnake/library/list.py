@@ -54,6 +54,12 @@ class ArrayList():
 				return True
 		return False
 
+	def copy(self):
+		result = []
+		for element in self.value:
+			result.append(element)
+		return ArrayList(result)
+
 	def each(self, logic):
 		for element in self.value:
 			logic(element)
@@ -124,7 +130,7 @@ class ArrayList():
 			result.append(self.value[x])
 		return ArrayList(result)
 
-	def to_list(self, count):
+	def to_list(self):
 		result = []
 		for element in self.value:
 			result.append(element)
