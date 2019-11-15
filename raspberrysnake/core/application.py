@@ -1,4 +1,5 @@
 from graphics.canvas import Graphics
+from input.controller import Controller
 from input.keyboard import Keyboard
 from library.dimensions import Dimensions
 from library.point import Point
@@ -46,6 +47,9 @@ class Application:
 
 		# Initial State
 		self.state_update(state)
+
+		# Initialise Controller
+		self.controller = Controller(self)
 
 		# Create Loop
 		def loop():
