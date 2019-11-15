@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from graphics.alignment import Align
+from library.point import Point
 
 class State(ABC):
 
@@ -24,6 +26,9 @@ class State(ABC):
 	@abstractmethod
 	def render(self, gfx):
 		pass
+
+	def render_title(self, gfx, value):
+		gfx.draw_text(value, Point(25, 25), Align.LEFT, "Inconsolata 22", "#E62959", "#801731")
 
 	@abstractmethod
 	def tick(self):

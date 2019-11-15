@@ -36,7 +36,7 @@ class Graphics:
 		else:
 			self.canvas.create_rectangle(position.x, position.y, position.x + size.width, position.y + size.height, outline = colour)
 
-	def draw_text(self, text, position, align = Align.LEFT, font = None, colour = None):
+	def draw_text(self, text, position, align = Align.LEFT, font = None, colour = None, shadow = None):
 
 		# Apply Offset
 		position = position + self.offset
@@ -53,6 +53,10 @@ class Graphics:
 
 		# Default Colour
 		if colour is None: colour = Graphics.text_default["colour"]
+
+		# Render Shadow
+		if shadow is not None:
+			self.canvas.create_text(position.x + 1, position.y + 1, text = text, font = font, fill = shadow, anchor = anchor)
 
 		# Render Text
 		self.canvas.create_text(position.x, position.y, text = text, font = font, fill = colour, anchor = anchor)
