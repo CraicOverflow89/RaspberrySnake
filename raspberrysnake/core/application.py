@@ -74,6 +74,9 @@ class Application:
 		# Start Application
 		self.app.mainloop()
 
+	def action(self, action):
+		self.state_active.on_action(action)
+
 	def get_dimensions(self):
 		return Application.size
 
@@ -91,7 +94,7 @@ class Application:
 
 	def on_key_pressed(self, event):
 		if event.keycode in Keyboard.action:
-			self.state_active.on_action(Keyboard.action[event.keycode])
+			self.action(Keyboard.action[event.keycode])
 
 	def state_bind(self):
 		self.app.bind("<Key>", self.on_key_pressed)
