@@ -32,13 +32,12 @@ class StateGame(State):
 		self.game_type = None
 		self.time_s = None
 		self.paused = False
+		self.finish = False
 		self.score = 0
 		self.world = World(Dimensions(18, 13))
 		self.snake = None
 		self.fruit = ArrayList()
 		self.obstacle = ArrayList()
-		self.finish_data = None
-		self.finish_time = None
 
 	def create_entities(self):
 
@@ -52,20 +51,20 @@ class StateGame(State):
 		if self.game_type == GameType.UPDATED:
 			self.obstacle = self.obstacle.add_all(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
 
-	def finish(self):
+	def end_game(self):
+
+		# Finished Status
+		self.finish = True
 
 		# Record Score
 		new_highscore = self.app.new_score(self.score)
 
-		# Game Data
-		self.finish_data = {
+		# Create Event
+		self.add_event(2000, lambda: self.app.state_update("RESULTS", False, {
 			"score": self.score,
 			"time": time.time() - self.time_s,
 			"highest": new_highscore
-		}
-
-		# Finished Wait
-		self.finish_time = time.time()
+		}))
 
 	def fruit_collect(self, fruit):
 
@@ -99,7 +98,7 @@ class StateGame(State):
 	def on_key_pressed(self, event):
 
 		# Game Finished
-		if self.finish_time is not None:
+		if self.finish is True:
 			return
 
 		# Game Paused
@@ -134,7 +133,7 @@ class StateGame(State):
 		gfx.draw_text("Score %s" % self.score, Point(25, 10))
 
 		# Game Finished
-		if self.finish_time is not None:
+		if self.finish is True:
 			gfx.draw_text("GAME OVER!!", Point(self.app.get_dimensions().width - 25, 10), Align.RIGHT)
 
 		# Game Running
@@ -164,15 +163,8 @@ class StateGame(State):
 	def tick(self):
 
 		# Game Finished
-		if self.finish_time is not None:
-
-			# Results State
-			if time.time() >= self.finish_time + 2:
-				self.app.state_update("RESULTS", False, self.finish_data)
-
-			# Keep Waiting
-			else:
-				return
+		if self.finish is True:
+			return
 
 		# Game Paused
 		if self.paused is True:
@@ -182,7 +174,7 @@ class StateGame(State):
 		if self.snake.tick():
 
 			# Snake Collision
-			self.finish()
+			self.end_game()
 			return
 
 		# Encounter Fruit
