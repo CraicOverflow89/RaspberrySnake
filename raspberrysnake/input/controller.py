@@ -41,7 +41,7 @@ class Controller:
 			if halt.is_set():
 				break
 			for event in pygame.event.get():
-				if event.type == pygame.JOYBUTTONDOWN and event.button == 1:
+				if event.type == pygame.JOYBUTTONDOWN and (event.button == 0 or event.button == 1):
 					self.add_action(Action.ACTION)
 				elif event.type == pygame.JOYAXISMOTION and (event.axis == 0 or event.axis == 1):
 					if event.axis == 0:
