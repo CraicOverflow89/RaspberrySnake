@@ -11,6 +11,9 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
  - audio
     - background music
     - sounds effects (eat fruit, collide boundary, cursor move/select)
+ - input
+    - keycode checks
+    - controller thread
 
 ### Issues
 

@@ -31,23 +31,27 @@ class StateGame(State):
 		self.time_s = time.time()
 		self.world = World(Dimensions(18, 13))
 		self.paused = False
+		self.finish_data = None
+		self.finish_time = None
 		self.score = 0
-		self.snake = Snake(self.world)
+		self.snake = Snake(self, self.world)
 		self.fruit = ArrayList(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
 		self.obstacle = ArrayList(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
 
 	def finish(self):
-		# NOTE: would be better to freeze animations for a moment before updating state
 
 		# Record Score
 		new_highscore = self.app.new_score(self.score)
 
-		# Results State
-		self.app.state_update("RESULTS", False, {
+		# Game Data
+		self.finish_data = {
 			"score": self.score,
 			"time": time.time() - self.time_s,
 			"highest": new_highscore
-		})
+		}
+
+		# Finished Wait
+		self.finish_time = time.time()
 
 	def fruit_collect(self, fruit):
 
@@ -75,7 +79,14 @@ class StateGame(State):
 		# Create Fruit
 		self.fruit.add(Fruit(spawn_point))
 
+	def is_obstacle(self, point):
+		return self.obstacle.any(lambda it: it.get_position() == point)
+
 	def on_key_pressed(self, event):
+
+		# Game Finished
+		if self.finish_time is not None:
+			return
 
 		# Game Paused
 		if self.paused is True:
@@ -95,7 +106,11 @@ class StateGame(State):
 	def render(self, gfx):
 
 		# Render Score
-		gfx.draw_text("Score %s" % self.score, Point(10, 10))
+		gfx.draw_text("Score %s" % self.score, Point(25, 10))
+
+		# Game Finished
+		if self.finish_time is not None:
+			gfx.draw_text("GAME OVER!!", Point(self.app.get_dimensions().width - 25, 10), Align.RIGHT)
 
 		# Game Running
 		if self.paused is False:
@@ -123,6 +138,17 @@ class StateGame(State):
 
 	def tick(self):
 
+		# Game Finished
+		if self.finish_time is not None:
+
+			# Results State
+			if time.time() >= self.finish_time + 2:
+				self.app.state_update("RESULTS", False, self.finish_data)
+
+			# Keep Waiting
+			else:
+				return
+
 		# Game Paused
 		if self.paused is True:
 			return
@@ -132,11 +158,8 @@ class StateGame(State):
 
 			# Snake Collision
 			self.finish()
+			return
 
 		# Encounter Fruit
 		fruit_match = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())
 		if fruit_match is not None: self.fruit_collect(fruit_match)
-
-		# Encounter Obstacle
-		if self.obstacle.any(lambda it: it.get_position() == self.snake.get_position()):
-			self.finish()

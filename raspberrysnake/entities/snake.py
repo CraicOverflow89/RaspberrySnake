@@ -21,7 +21,8 @@ class Snake(Entity):
 		Direction.WEST: Direction.EAST
 	}
 
-	def __init__(self, world):
+	def __init__(self, game, world):
+		self.game = game
 		self.world = world
 		self.body = ArrayList(Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5))
 		self.direction = Direction.WEST
@@ -87,12 +88,16 @@ class Snake(Entity):
 			Direction.WEST: pos_this + Point(-1, 0)
 		}[self.direction]
 
-		# Encounter Body
+		# Body Collision
 		if target in self.body:
 			return True
 
-		# Encounter Boundary
+		# Boundary Collision
 		if not (self.world.get_dimensions() - 1).contains(target):
+			return True
+
+		# Obstacle Collision
+		if self.game.is_obstacle(target):
 			return True
 
 		# Create Body
