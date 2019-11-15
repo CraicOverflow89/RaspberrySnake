@@ -8,8 +8,13 @@ from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
 from library.point import Point
+import enum
 import random
 import time
+
+class GameType(enum.Enum):
+	CLASSIC = 0
+	UPDATED = 1
 
 class StateGame(State):
 
