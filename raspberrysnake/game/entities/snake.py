@@ -24,11 +24,31 @@ class Snake(Entity):
 	def __init__(self, game, world):
 		self.game = game
 		self.world = world
-		self.body = ArrayList(Point(5, 3), Point(6, 3), Point(7, 3), Point(7, 4), Point(7, 5))
+		self.body = self.create_body()
 		self.direction = Direction.WEST
 		self.direction_next = None
 		self.grow_next = False
-		super().__init__(self.body.first(), Dimensions(32, 32))
+		super().__init__(self.body.first().get_position(), Dimensions(32, 32))
+
+	def create_body(self):
+		result = []
+		result.append(SnakePieceHead(self, Point(5, 3), Direction.WEST))
+		result.append(SnakePieceBody(self, Point(6, 3), Direction.WEST, Direction.EAST))
+		result.append(SnakePieceBody(self, Point(7, 3), Direction.WEST, Direction.SOUTH))
+		result.append(SnakePieceBody(self, Point(7, 4), Direction.NORTH, Direction.SOUTH))
+		result.append(SnakePieceBody(self, Point(7, 5), Direction.NORTH))
+		return ArrayList(result)
+
+	def direction_to(source, target):
+		if target.x < source.x:
+			return Direction.WEST
+		elif target.x > source.x:
+			return Direction.EAST
+		elif target.y < source.y:
+			return Direction.NORTH
+		else:
+			return Direction.SOUTH
+		# NOTE: this should live in another class
 
 	def face(self, direction):
 		if direction != Snake.direction_opposite[self.direction]:
@@ -40,12 +60,12 @@ class Snake(Entity):
 		result = ArrayList()
 
 		# Actual Body
-		result = result.add_all(self.body)
+		result = result.add_all(self.body.map(lambda it: it.get_position()))
 
 		# Spaces Ahead
-		location_1 = self.game.get_position_adjacent(self.body.first(), self.direction)
-		location_2 = self.game.get_position_adjacent(location_1, self.direction)
-		result = result.add_all(location_1, location_2)
+		target = self.game.get_position_adjacent(self.body.first().get_position(), self.direction)
+		result = result.add(target)
+		result = result.add(self.game.get_position_adjacent(target, self.direction))
 
 		# Return Positions
 		return result
@@ -54,36 +74,7 @@ class Snake(Entity):
 		self.grow_next = True
 
 	def render(self, gfx):
-
-		# Direction Logic
-		def direction_to(source, target):
-			if target.x < source.x:
-				return Direction.WEST
-			elif target.x > source.x:
-				return Direction.EAST
-			elif target.y < source.y:
-				return Direction.NORTH
-			else:
-				return Direction.SOUTH
-
-		# Render Logic
-		def render_piece(image, position):
-			gfx.draw_image(ImageLoader.load("snake/%s" % image), position * Point(self.size.width, self.size.height))
-
-		# Render Head
-		render_piece("head_%s" % Snake.direction_map[self.direction], self.body.first())
-
-		# Render Body
-		for x in range(1, self.body.size() - 1):
-			pos_this = self.body.get(x)
-			char_prev = Snake.direction_map[direction_to(pos_this, self.body.get(x - 1))]
-			char_next = Snake.direction_map[direction_to(pos_this, self.body.get(x + 1))]
-			render_piece("body_%s" % "".join(sorted((char_prev, char_next))), pos_this)
-
-		# Render Tail
-		pos_this = self.body.get(self.body.size() - 1)
-		pos_prev = self.body.get(self.body.size() - 2)
-		render_piece("tail_%s" % Snake.direction_map[direction_to(pos_this, pos_prev)], pos_this)
+		self.body.each(lambda it: it.render(gfx))
 
 	def tick(self):
 
@@ -92,10 +83,10 @@ class Snake(Entity):
 			self.direction_next = self.direction
 
 		# Calculate Target
-		target = self.game.get_position_adjacent(self.body.first(), self.direction_next)
+		target = self.game.get_position_adjacent(self.body.first().get_position(), self.direction_next)
 
 		# Body Collision
-		if target in self.body:
+		if target in self.body.map(lambda it: it.get_position()):
 			return True
 
 		# Boundary Collision
@@ -110,22 +101,65 @@ class Snake(Entity):
 		self.direction = self.direction_next
 		self.direction_next = None
 
-		# Create Body
-		body_new = [target]
-
-		# Iterate Pieces
-		for x in range(self.body.size() - 1):
-			body_new.append(self.body.get(x))
-			# NOTE: might be better to say [target].add_all(body.take(up to grow_next ? size : size -1))
-
-		# Invoke Growth
-		if self.grow_next is True:
-			body_new.append(self.body.get(self.body.size() - 1))
-			self.grow_next = False
-
 		# Update Body
-		self.body = ArrayList(body_new)
-		self.position = self.body.first()
+		self.body = self.update_body(target)
+		self.position = self.body.first().get_position()
 
 		# No Encounter
 		return False
+
+	def update_body(self, target):
+
+		# Create Body
+		result = [SnakePieceHead(self, target, self.direction)]
+		result.append(SnakePieceBody(self, self.body.get(0).get_position(), self.direction, Snake.direction_to(self.body.get(0).get_position(), self.body.get(1).get_position())))
+
+		# Handle Growth
+		if self.grow_next is True:
+			copy_body = self.body.size() - 1
+			tail_position = self.body.get(self.body.size() - 1).get_position()
+			tail_previous = self.body.get(self.body.size() - 2).get_position()
+			self.grow_next = False
+		else:
+			copy_body = self.body.size() - 2
+			tail_position = self.body.get(self.body.size() - 2).get_position()
+			tail_previous = self.body.get(self.body.size() - 3).get_position()
+
+		# Create Body
+		for x in range(1, copy_body):
+			result.append(self.body.get(x))
+
+		# Create Tail
+		result.append(SnakePieceBody(self, tail_position, Snake.direction_to(tail_position, tail_previous)))
+
+		# Return Result
+		return ArrayList(result)
+
+class SnakePiece():
+
+	def __init__(self, snake, position, type, image):
+		self.snake = snake
+		self.position = position
+		self.image = "%s_%s" % (type, image)
+
+	def get_position(self):
+		return self.position
+
+	def render(self, gfx):
+		gfx.draw_image(ImageLoader.load("snake/%s" % self.image), self.position * Point(self.snake.size.width, self.snake.size.height))
+
+class SnakePieceBody(SnakePiece):
+
+	def __init__(self, snake, position, direction_prev, direction_next = None):
+		if direction_next is None:
+			type = "tail"
+			image = Snake.direction_map[direction_prev]
+		else:
+			type = "body"
+			image = "".join(sorted((Snake.direction_map[direction_prev], Snake.direction_map[direction_next])))
+		super().__init__(snake, position, type, image)
+
+class SnakePieceHead(SnakePiece):
+
+	def __init__(self, snake, position, direction):
+		super().__init__(snake, position, "head", Snake.direction_map[direction])
