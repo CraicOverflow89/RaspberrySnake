@@ -4,7 +4,7 @@ class ArrayList():
 		self.value = []
 		self.iter_pos = 0
 		if len(value) > 0:
-			if isinstance(value[0], list) and len(value) == 1:
+			if len(value) == 1 and (isinstance(value[0], list) or isinstance(value[0], ArrayList)):
 				value = value[0]
 			for element in value:
 				self.value.append(element)
@@ -30,7 +30,7 @@ class ArrayList():
 
 	def add_all(self, *value):
 		result = self.value
-		if isinstance(value[0], list) and len(value) == 1:
+		if len(value) == 1 and (isinstance(value[0], list) or isinstance(value[0], ArrayList)):
 			value = value[0]
 		for element in value:
 			result.append(element)
