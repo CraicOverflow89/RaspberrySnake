@@ -10,6 +10,7 @@ from states.results import StateResults
 from states.title import StateTitle
 from tkinter import Canvas, Tk
 import time
+import sys
 
 class Application:
 
@@ -51,8 +52,15 @@ class Application:
 		# Initialise Controller
 		self.controller = Controller(self)
 
+		# Application Status
+		self.running = True
+
 		# Create Loop
 		def loop():
+
+			# Not Running
+			if self.running is not True:
+				return
 
 			# Timer Start
 			loop_time = (time.time() * 1000)
@@ -140,3 +148,14 @@ class Application:
 
 		# Bind Events
 		self.state_bind()
+
+	def terminate(self):
+
+		# Application Status
+		self.running = False
+
+		# Terminate Controller
+		self.controller.terminate()
+
+		# System Exit
+		sys.exit()
