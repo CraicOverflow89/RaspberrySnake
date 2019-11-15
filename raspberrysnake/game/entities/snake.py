@@ -35,7 +35,20 @@ class Snake(Entity):
 			self.direction_next = direction
 
 	def get_position_list(self):
-		return self.body
+
+		# Create Result
+		result = ArrayList()
+
+		# Actual Body
+		result = result.add_all(self.body)
+
+		# Spaces Ahead
+		location_1 = self.game.get_position_adjacent(self.body.get(0), self.direction)
+		location_2 = self.game.get_position_adjacent(location_1, self.direction)
+		result = result.add_all(location_1, location_2)
+
+		# Return Positions
+		return result
 
 	def grow(self):
 		self.grow_next = True
@@ -74,19 +87,12 @@ class Snake(Entity):
 
 	def tick(self):
 
-		# Update Direction
-		if self.direction_next is not None:
-			self.direction = self.direction_next
-			self.direction_next = None
+		# Target Direction
+		if self.direction_next is None:
+			self.direction_next = self.direction
 
 		# Calculate Target
-		pos_this = self.body.get(0)
-		target = {
-			Direction.EAST: pos_this + Point(1, 0),
-			Direction.NORTH: pos_this + Point(0, -1),
-			Direction.SOUTH: pos_this + Point(0, 1),
-			Direction.WEST: pos_this + Point(-1, 0)
-		}[self.direction]
+		target = self.game.get_position_adjacent(self.body.get(0), self.direction_next)
 
 		# Body Collision
 		if target in self.body:
@@ -99,6 +105,10 @@ class Snake(Entity):
 		# Obstacle Collision
 		if self.game.is_obstacle(target):
 			return True
+
+		# Update Direction
+		self.direction = self.direction_next
+		self.direction_next = None
 
 		# Create Body
 		body_new = [target]

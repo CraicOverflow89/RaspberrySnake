@@ -57,7 +57,7 @@ class GameEngine:
 		obstacle_point = self.obstacle.map(lambda it: it.get_position())
 
 		# Empty Locations
-		return self.world.get_position_list().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it))
+		return self.world.get_position_list().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it)).reject(lambda it: obstacle_point.contains(it))
 
 	def end_game(self):
 
