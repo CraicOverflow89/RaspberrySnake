@@ -1,10 +1,10 @@
 from core.states import State
+from game.type import GameType
 from graphics.alignment import Align
 from graphics.images import ImageLoader
 from graphics.menu import Menu
 from library.dimensions import Dimensions
 from library.point import Point
-from states.game import GameType
 import sys
 
 class StateTitle(State):

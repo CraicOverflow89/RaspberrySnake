@@ -2,19 +2,15 @@ from core.states import State
 from entities.fruit import Fruit
 from entities.obstacle import Obstacle
 from entities.snake import Snake
-from entities.world import World
+from game.type import GameType
+from game.world import World
 from graphics.alignment import Align
 from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
 from library.point import Point
-import enum
 import random
 import time
-
-class GameType(enum.Enum):
-	CLASSIC = 0
-	UPDATED = 1
 
 class StateGame(State):
 
