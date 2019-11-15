@@ -54,6 +54,7 @@ class Application:
 
 			# Application Tick
 			self.state_active.tick()
+			self.state_active.tick_event()
 
 			# Application Render
 			gfx.draw_rect(Point(0, 0), self.size, "black", True)

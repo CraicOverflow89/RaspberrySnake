@@ -1,12 +1,21 @@
 from abc import ABC, abstractmethod
 from graphics.alignment import Align
+from library.list import ArrayList
 from library.point import Point
+import time
 
 class State(ABC):
 
 	def __init__(self, app, name):
 		self.app = app
 		self.name = name
+		self.event = ArrayList()
+
+	def add_event(self, time_ms, logic):
+		self.event = self.event.add({
+			"logic": logic,
+			"timer": (time.time() * 1000) + time_ms
+		})
 
 	def on_key_pressed(event):
 		pass
@@ -33,3 +42,15 @@ class State(ABC):
 	@abstractmethod
 	def tick(self):
 		pass
+
+	def tick_event(self):
+
+		# Check Events
+		time_ms = time.time() * 1000
+		for event in self.event.filter(lambda it: time_ms >= it["timer"]):
+
+			# Invoke Logic
+			event["logic"]()
+
+			# Remove Event
+			self.event = self.event.remove(event)
