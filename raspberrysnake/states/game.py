@@ -33,15 +33,28 @@ class StateGame(State):
 
 	def __init__(self, app):
 		super().__init__(app, "GAME")
-		self.time_s = time.time()
-		self.world = World(Dimensions(18, 13))
+		self.game_type = None
+		self.time_s = None
 		self.paused = False
+		self.score = 0
+		self.world = World(Dimensions(18, 13))
+		self.snake = None
+		self.fruit = ArrayList()
+		self.obstacle = ArrayList()
 		self.finish_data = None
 		self.finish_time = None
-		self.score = 0
+
+	def create_entities(self):
+
+		# Create Snake
 		self.snake = Snake(self, self.world)
-		self.fruit = ArrayList(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
-		self.obstacle = ArrayList(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
+
+		# Create Friut
+		self.fruit = self.fruit.add_all(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
+
+		# Create Obstacles
+		if self.game_type == GameType.UPDATED:
+			self.obstacle = self.obstacle.add_all(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
 
 	def finish(self):
 
@@ -107,6 +120,17 @@ class StateGame(State):
 		# Face Direction
 		if event.keycode in StateGame.directional_keys.keys():
 			self.snake.face(StateGame.directional_keys[event.keycode])
+
+	def on_start(self, data):
+
+		# Game Type
+		self.game_type = data["type"]
+
+		# Create Entities
+		self.create_entities()
+
+		# Start Time
+		self.time_s = time.time()
 
 	def render(self, gfx):
 
