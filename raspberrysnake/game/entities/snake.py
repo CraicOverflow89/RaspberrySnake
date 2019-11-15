@@ -1,4 +1,5 @@
 from game.entities.entity import Entity
+from game.world import World
 from graphics.images import ImageLoader
 from library.dimensions import Dimensions
 from library.direction import Direction
@@ -6,20 +7,6 @@ from library.list import ArrayList
 from library.point import Point
 
 class Snake(Entity):
-
-	# Constants
-	direction_map = {
-		Direction.EAST: "E",
-		Direction.NORTH: "N",
-		Direction.SOUTH: "S",
-		Direction.WEST: "W"
-	}
-	direction_opposite = {
-		Direction.EAST: Direction.WEST,
-		Direction.NORTH: Direction.SOUTH,
-		Direction.SOUTH: Direction.NORTH,
-		Direction.WEST: Direction.EAST
-	}
 
 	def __init__(self, game, world):
 		self.game = game
@@ -39,19 +26,8 @@ class Snake(Entity):
 		result.append(SnakePieceBody(self, Point(7, 5), Direction.NORTH))
 		return ArrayList(result)
 
-	def direction_to(source, target):
-		if target.x < source.x:
-			return Direction.WEST
-		elif target.x > source.x:
-			return Direction.EAST
-		elif target.y < source.y:
-			return Direction.NORTH
-		else:
-			return Direction.SOUTH
-		# NOTE: this should live in another class
-
 	def face(self, direction):
-		if direction != Snake.direction_opposite[self.direction]:
+		if direction != World.get_direction_opposite(self.direction):
 			self.direction_next = direction
 
 	def get_position_list(self):
@@ -112,7 +88,7 @@ class Snake(Entity):
 
 		# Create Body
 		result = [SnakePieceHead(self, target, self.direction)]
-		result.append(SnakePieceBody(self, self.body.get(0).get_position(), self.direction, Snake.direction_to(self.body.get(0).get_position(), self.body.get(1).get_position())))
+		result.append(SnakePieceBody(self, self.body.get(0).get_position(), self.direction, World.get_direction_to(self.body.get(0).get_position(), self.body.get(1).get_position())))
 
 		# Handle Growth
 		if self.grow_next is True:
@@ -130,7 +106,7 @@ class Snake(Entity):
 			result.append(self.body.get(x))
 
 		# Create Tail
-		result.append(SnakePieceBody(self, tail_position, Snake.direction_to(tail_position, tail_previous)))
+		result.append(SnakePieceBody(self, tail_position, World.get_direction_to(tail_position, tail_previous)))
 
 		# Return Result
 		return ArrayList(result)
@@ -153,13 +129,13 @@ class SnakePieceBody(SnakePiece):
 	def __init__(self, snake, position, direction_prev, direction_next = None):
 		if direction_next is None:
 			type = "tail"
-			image = Snake.direction_map[direction_prev]
+			image = World.get_direction_char(direction_prev)
 		else:
 			type = "body"
-			image = "".join(sorted((Snake.direction_map[direction_prev], Snake.direction_map[direction_next])))
+			image = "".join(sorted((World.get_direction_char(direction_prev), World.get_direction_char(direction_next))))
 		super().__init__(snake, position, type, image)
 
 class SnakePieceHead(SnakePiece):
 
 	def __init__(self, snake, position, direction):
-		super().__init__(snake, position, "head", Snake.direction_map[direction])
+		super().__init__(snake, position, "head", World.get_direction_char(direction))
