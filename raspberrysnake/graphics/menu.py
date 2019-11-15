@@ -1,3 +1,4 @@
+from input.action import Action
 from library.list import ArrayList
 from library.point import Point
 
@@ -14,20 +15,20 @@ class Menu:
 	def get_offset(self):
 		return self.offset
 
-	def on_key_pressed(self, event):
+	def on_action(self, action):
 
 		# Invoke Option
-		if event.keycode == 13 or event.keycode == 36:
+		if action == Action.ACTION:
 			self.option.get(self.active).invoke()
 			return
 
 		# Cursor Up
-		if event.keycode == 38 or event.keycode == 111:
+		if action == Action.UP:
 			if self.active > 0: self.active -= 1
 			return
 
 		# Cursor Down
-		if event.keycode == 40 or event.keycode == 116:
+		if action == Action.DOWN:
 			if self.active < self.option.size() - 1: self.active += 1
 			return
 

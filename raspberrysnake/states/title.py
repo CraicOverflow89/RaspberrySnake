@@ -15,10 +15,10 @@ class StateTitle(State):
 		self.menu.add_option("About", Point(290, 320), lambda: self.app.state_update("ABOUT", True))
 		self.menu.add_option("Exit", Point(290, 350), lambda: sys.exit())
 
-	def on_key_pressed(self, event):
+	def on_action(self, action):
 
 		# Menu Events
-		self.menu.on_key_pressed(event)
+		self.menu.on_action(action)
 
 	def on_revert(self, data):
 

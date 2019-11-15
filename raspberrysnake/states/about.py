@@ -20,7 +20,7 @@ class StateAbout(State):
 		self.info.append("Repository")
 		self.info.append("https://github.com/CraicOverflow89/RaspberrySnake/")
 
-	def on_key_pressed(self, event):
+	def on_action(self, action):
 
 		# Title State
 		self.app.state_revert()

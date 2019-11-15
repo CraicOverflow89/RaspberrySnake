@@ -7,8 +7,8 @@ class StateGame(State):
 		super().__init__(app, "GAME")
 		self.engine = GameEngine(app, self)
 
-	def on_key_pressed(self, event):
-		self.engine.on_key_pressed(event)
+	def on_action(self, action):
+		self.engine.on_action(action)
 
 	def render(self, gfx):
 		self.engine.render(gfx)

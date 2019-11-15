@@ -1,4 +1,5 @@
 from graphics.canvas import Graphics
+from input.keyboard import Keyboard
 from library.dimensions import Dimensions
 from library.point import Point
 from states.about import StateAbout
@@ -88,6 +89,13 @@ class Application:
 			return True
 		return False
 
+	def on_key_pressed(self, event):
+		if event.keycode in Keyboard.action:
+			self.state_active.on_action(Keyboard.action[event.keycode])
+
+	def state_bind(self):
+		self.app.bind("<Key>", self.on_key_pressed)
+
 	def state_revert(self, data = None):
 
 		# Nothing Stored
@@ -103,7 +111,7 @@ class Application:
 		self.state_stored = None
 
 		# Bind Events
-		self.app.bind("<Key>", self.state_active.on_key_pressed)
+		self.state_bind()
 
 	def state_update(self, state, store = False, data = None):
 
@@ -124,4 +132,4 @@ class Application:
 		self.state_active.on_start(data)
 
 		# Bind Events
-		self.app.bind("<Key>", self.state_active.on_key_pressed)
+		self.state_bind()

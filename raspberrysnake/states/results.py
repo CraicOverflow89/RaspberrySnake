@@ -13,10 +13,10 @@ class StateResults(State):
 		self.menu.add_option("Play Again", Point(290, 260), lambda: self.app.state_update("GAME"))
 		self.menu.add_option("Back to Title", Point(290, 290), lambda: self.app.state_update("TITLE"))
 
-	def on_key_pressed(self, event):
+	def on_action(self, action):
 
 		# Menu Events
-		self.menu.on_key_pressed(event)
+		self.menu.on_action(action)
 
 	def on_start(self, data):
 

@@ -17,7 +17,7 @@ class State(ABC):
 			"timer": (time.time() * 1000) + time_ms
 		})
 
-	def on_key_pressed(event):
+	def on_action(self, action):
 		pass
 
 	def on_revert(self, data):

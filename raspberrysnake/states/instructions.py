@@ -18,7 +18,7 @@ class StateInstructions(State):
 		self.info.append("Collision")
 		self.info.append("It's game over if you hit the your tail or the boundary.")
 
-	def on_key_pressed(self, event):
+	def on_action(self, action):
 
 		# Title State
 		self.app.state_revert()

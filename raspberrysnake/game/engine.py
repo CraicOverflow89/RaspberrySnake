@@ -3,6 +3,7 @@ from game.entities.obstacle import Obstacle
 from game.entities.snake import Snake
 from game.world import World
 from graphics.alignment import Align
+from input.action import Action
 from library.dimensions import Dimensions
 from library.direction import Direction
 from library.list import ArrayList
@@ -14,15 +15,11 @@ class GameEngine:
 
 	# Constants
 	world_pos = Point(32, 48)
-	directional_keys = {
-		37: Direction.WEST,
-		38: Direction.NORTH,
-		39: Direction.EAST,
-		40: Direction.SOUTH,
-		111: Direction.NORTH,
-		113: Direction.WEST,
-		114: Direction.EAST,
-		116: Direction.SOUTH
+	directional_action = {
+		Action.DOWN: Direction.SOUTH,
+		Action.LEFT: Direction.WEST,
+		Action.RIGHT: Direction.EAST,
+		Action.UP: Direction.NORTH
 	}
 
 	def __init__(self, app, state):
@@ -121,7 +118,7 @@ class GameEngine:
 			spawn_point = spawn_point.remove(spawn_final)
 			self.obstacle.add(Obstacle(spawn_final))
 
-	def on_key_pressed(self, event):
+	def on_action(self, action):
 
 		# Game Finished
 		if self.finish is True:
@@ -129,18 +126,18 @@ class GameEngine:
 
 		# Game Paused
 		if self.paused is True:
-			if event.keycode == 13 or event.keycode == 36:
+			if action == Action.ACTION:
 				self.paused = False
 			return
 
 		# Pause Game
-		if event.keycode == 13 or event.keycode == 36:
+		if action == Action.ACTION:
 			self.paused = True
 			return
 
 		# Face Direction
-		if event.keycode in GameEngine.directional_keys.keys():
-			self.snake.face(GameEngine.directional_keys[event.keycode])
+		if action in GameEngine.directional_action.keys():
+			self.snake.face(GameEngine.directional_action[action])
 
 	def render(self, gfx):
 
