@@ -18,6 +18,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 ### Issues
 
  - repetition of alternative keycode checks (use enum instead)
+ - graphical issue when hitting boundary after moving alongside it (don't render new direction)
 
 ### Notes
 
