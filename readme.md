@@ -3,14 +3,23 @@ Raspberry Snake
 
 Small game written in Python, with the goal of playing on Raspberry Pi with game controller.
 
-### Prerequisites
+### Requirements
 
 The following software is required to play the game;
 
  - Python 3 (version 3.8 or higher recommended)
  - pygame (install with pip `$ python -m pip install pygame` if you don't have it)
 
-### Game Controller
+### Playing the Game
+
+There is no release at the moment but you can pull down the code and run it without any other setup.
+
+```
+$ git clone https://github.com/CraicOverflow89/RaspberrySnake.git
+$ python ./RaspberrySnake/raspberrysnake/app.py
+```
+
+### Using a Controller
 
 You can use a PS4 dual shock controller to play the game: I haven't configured it to use other devices but mappings to enter and directional keys should work.
 
