@@ -11,7 +11,7 @@ class Dimensions:
 		return Dimensions(self.width * value, self.height * value)
 
 	def __str__(self):
-		return "\{width\: %d, height\: %d\}" % (self.width, self.height)
+		return "{width: %d, height: %d}" % (self.width, self.height)
 
 	def __sub__(self, value):
 		return Dimensions(self.width - value, self.height - value)

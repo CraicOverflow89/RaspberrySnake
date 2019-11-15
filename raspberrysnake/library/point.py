@@ -17,7 +17,7 @@ class Point:
 		return self.x != other.x or self.y != other.y
 
 	def __str__(self):
-		return "\{x\: %d, y\: %d\}" % (self.x, self.y)
+		return "{x: %d, y: %d}" % (self.x, self.y)
 
 	def __sub__(self, other):
 		return Point(self.x - other.x, self.y - other.y)
