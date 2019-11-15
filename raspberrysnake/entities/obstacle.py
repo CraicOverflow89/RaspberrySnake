@@ -6,7 +6,7 @@ from library.point import Point
 class Obstacle(Entity):
 
 	# Constants
-	image_list = ["stone_0"]
+	image_list = ["bush_0, stone_0"]
 
 	def __init__(self, position, image = None):
 		super().__init__(position, Dimensions(32, 32))

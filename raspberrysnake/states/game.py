@@ -34,7 +34,7 @@ class StateGame(State):
 		self.score = 0
 		self.snake = Snake(self.world)
 		self.fruit = ArrayList(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
-		self.obstacle = ArrayList(Obstacle(Point(1, 1), "stone_0"))
+		self.obstacle = ArrayList(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
 
 	def finish(self):
 		# NOTE: would be better to freeze animations for a moment before updating state
@@ -134,8 +134,8 @@ class StateGame(State):
 			self.finish()
 
 		# Encounter Fruit
-		if self.fruit.any(lambda it: it.get_position() == self.snake.get_position()):
-			self.fruit_collect(fruit_match)
+		fruit_match = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())
+		if fruit_match is not None: self.fruit_collect(fruit_match)
 
 		# Encounter Obstacle
 		if self.obstacle.any(lambda it: it.get_position() == self.snake.get_position()):
