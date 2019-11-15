@@ -28,8 +28,10 @@ class ArrayList():
 		result.append(value)
 		return ArrayList(result)
 
-	def add_all(self, value):
+	def add_all(self, *value):
 		result = self.value
+		if isinstance(value[0], list) and len(value) == 1:
+			value = value[0]
 		for element in value:
 			result.append(element)
 		return ArrayList(result)
