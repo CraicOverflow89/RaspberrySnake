@@ -105,6 +105,14 @@ class ArrayList():
 				result.append(element)
 		return ArrayList(result)
 
+	def reverse(self):
+		result = []
+		x = len(self.value) - 1
+		while x >= 0:
+			result.append(self.value[x])
+			x -= 1
+		return ArrayList(result)
+
 	def size(self):
 		return len(self.value)
 
