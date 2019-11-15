@@ -28,7 +28,7 @@ class Snake(Entity):
 		self.direction = Direction.WEST
 		self.direction_next = None
 		self.grow_next = False
-		super().__init__(self.body.get(0), Dimensions(32, 32))
+		super().__init__(self.body.first(), Dimensions(32, 32))
 
 	def face(self, direction):
 		if direction != Snake.direction_opposite[self.direction]:
@@ -43,7 +43,7 @@ class Snake(Entity):
 		result = result.add_all(self.body)
 
 		# Spaces Ahead
-		location_1 = self.game.get_position_adjacent(self.body.get(0), self.direction)
+		location_1 = self.game.get_position_adjacent(self.body.first(), self.direction)
 		location_2 = self.game.get_position_adjacent(location_1, self.direction)
 		result = result.add_all(location_1, location_2)
 
@@ -71,7 +71,7 @@ class Snake(Entity):
 			gfx.draw_image(ImageLoader.load("snake/%s" % image), position * Point(self.size.width, self.size.height))
 
 		# Render Head
-		render_piece("head_%s" % Snake.direction_map[self.direction], self.body.get(0))
+		render_piece("head_%s" % Snake.direction_map[self.direction], self.body.first())
 
 		# Render Body
 		for x in range(1, self.body.size() - 1):
@@ -92,7 +92,7 @@ class Snake(Entity):
 			self.direction_next = self.direction
 
 		# Calculate Target
-		target = self.game.get_position_adjacent(self.body.get(0), self.direction_next)
+		target = self.game.get_position_adjacent(self.body.first(), self.direction_next)
 
 		# Body Collision
 		if target in self.body:
@@ -125,7 +125,7 @@ class Snake(Entity):
 
 		# Update Body
 		self.body = ArrayList(body_new)
-		self.position = self.body.get(0)
+		self.position = self.body.first()
 
 		# No Encounter
 		return False

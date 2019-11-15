@@ -66,7 +66,8 @@ class ArrayList():
 				result.append(element)
 		return ArrayList(result)
 
-	def first(self, logic):
+	def first(self, logic = None):
+		if logic is None: return self.value[0]
 		for element in self.value:
 			if logic(element):
 				return element

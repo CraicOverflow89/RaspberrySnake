@@ -15,7 +15,6 @@ class Graphics:
 		self.offset = offset
 
 	def draw_image(self, image, position):
-		# NOTE: could add optional Align argument
 
 		# Apply Offset
 		position = position + self.offset
