@@ -44,7 +44,7 @@ class GameEngine:
 		self.snake = Snake(self, self.world)
 
 		# Create Friut
-		self.fruit = self.fruit.add_all(Fruit(Point(2, 7), "apple_R"), Fruit(Point(9, 5), "apple_G"))
+		self.fruit_spawn(3)
 
 		# Create Obstacles
 		self.obstacle = self.obstacle.add_all(Obstacle(Point(0, 2), "stone_0"), Obstacle(Point(4, 7), "bush_0"))
