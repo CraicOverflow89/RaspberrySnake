@@ -40,6 +40,12 @@ class ArrayList():
 				return False
 		return True
 
+	def any(self, logic):
+		for element in self.value:
+			if logic(element):
+				return True
+		return False
+
 	def contains(self, value):
 		for element in self.value:
 			if element == value:
