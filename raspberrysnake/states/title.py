@@ -1,4 +1,5 @@
 from core.states import State
+from graphics.alignment import Align
 from graphics.images import ImageLoader
 from graphics.menu import Menu
 from library.dimensions import Dimensions
@@ -27,7 +28,7 @@ class StateTitle(State):
 	def render(self, gfx):
 
 		# Render Logo
-		gfx.draw_image(ImageLoader.load("logo"), Point(160, 40))
+		gfx.draw_image(ImageLoader.load("logo"), Point(self.app.get_dimensions().width / 2, 40), Align.MIDDLE)
 
 		# Render Menu
 		self.menu.render(gfx)

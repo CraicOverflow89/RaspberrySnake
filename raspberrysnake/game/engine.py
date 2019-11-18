@@ -156,7 +156,7 @@ class GameEngine:
 
 		# Game Paused
 		else:
-			gfx.draw_text("PAUSED", Point(self.app.get_dimensions().width / 2, self.app.get_dimensions().height / 2), Align.CENTER)
+			gfx.draw_text("PAUSED", Point(self.app.get_dimensions().width / 2, self.app.get_dimensions().height / 2), Align.CENTER, "Inconsolata 22")
 
 	def render_game(self, gfx):
 

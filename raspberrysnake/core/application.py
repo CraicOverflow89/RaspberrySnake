@@ -16,7 +16,7 @@ class Application:
 
 	# Constants
 	version = "0.0.1"
-	size = Dimensions(640, 480)
+	size = Dimensions(960, 720)
 	tick_ms = 250
 	state_create = {
 		"ABOUT": StateAbout,
