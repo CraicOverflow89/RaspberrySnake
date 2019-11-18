@@ -19,3 +19,7 @@ Development notes, tasks and ideas.
 ### Graphics
 
  - snake should be comprised of colours `#366E9D` and `#FFD84D`
+
+### Sounds
+
+ - [ZapSplat](www.zapsplat.com)

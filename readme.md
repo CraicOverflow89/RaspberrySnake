@@ -8,6 +8,7 @@ Small game written in Python, with the goal of playing on Raspberry Pi with game
 The following software is required to play the game;
 
  - Python 3 (version 3.8 or higher recommended)
+ - playsound (install with pip `$ python -m pip install playsound` if you don't have it)
  - pygame (install with pip `$ python -m pip install pygame` if you don't have it)
 
 ### Playing the Game

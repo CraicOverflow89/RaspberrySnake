@@ -19,6 +19,9 @@ class StateAbout(State):
 		self.info.append("")
 		self.info.append("Repository")
 		self.info.append("https://github.com/CraicOverflow89/RaspberrySnake/")
+		self.info.append("")
+		self.info.append("Sounds")
+		self.info.append("https://www.zapsplat.com/")
 
 	def on_action(self, action):
 

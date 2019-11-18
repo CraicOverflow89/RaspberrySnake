@@ -1,3 +1,4 @@
+from audio.sounds import SoundLoader
 from game.entities.fruit import Fruit
 from game.entities.obstacle import Obstacle
 from game.entities.snake import Snake
@@ -72,6 +73,9 @@ class GameEngine:
 		}))
 
 	def fruit_collect(self, fruit):
+
+		# Play Sound
+		SoundLoader.play("collect")
 
 		# Update Score
 		self.score += fruit.get_score()
