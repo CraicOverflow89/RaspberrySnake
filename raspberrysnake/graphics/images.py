@@ -9,7 +9,7 @@ class ImageLoader:
 
 		# Store Image
 		if image not in ImageLoader.data:
-			ImageLoader.data[image] = ImageTk.PhotoImage(Image.open("resources/" + image + ".png"))
+			ImageLoader.data[image] = ImageTk.PhotoImage(Image.open("resources/images/%s.png" % image))
 
 		# Return Image
 		return ImageLoader.data[image]
