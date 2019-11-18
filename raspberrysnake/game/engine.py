@@ -59,6 +59,9 @@ class GameEngine:
 
 	def end_game(self):
 
+		# Play Sound
+		SoundLoader.play("collision")
+
 		# Finished Status
 		self.finish = True
 
