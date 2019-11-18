@@ -6,7 +6,6 @@ Development notes, tasks and ideas.
 ### Tasks
 
  - graphics
-    - png images
     - transparency
     - save canvas portion for rendering elsewhere?
  - game
@@ -14,7 +13,6 @@ Development notes, tasks and ideas.
     - better graphics for fruit
  - audio
     - background music
-    - sounds effects (eat fruit, collision, menu move/select)
 
 ### Graphics
 
