@@ -5,7 +5,11 @@ Development notes, tasks and ideas.
 
 ### Tasks
 
- - game screen
+ - graphics
+    - png images
+    - transparency
+    - save canvas portion for rendering elsewhere?
+ - game
     - better graphics for snake
     - better graphics for fruit
  - audio
