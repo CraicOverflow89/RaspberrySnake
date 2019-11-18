@@ -9,18 +9,24 @@ class Graphics:
 		"font": "Inconsolata 14",
 		"colour": "white"
 	}
+	anchor = {
+		Align.CENTER: tk.CENTER,
+		Align.LEFT: tk.NW,
+		Align.MIDDLE: tk.N,
+		Align.RIGHT: tk.NE
+	}
 
 	def __init__(self, canvas, offset = Point(0, 0)):
 		self.canvas = canvas
 		self.offset = offset
 
-	def draw_image(self, image, position):
+	def draw_image(self, image, position, align = Align.LEFT):
 
 		# Apply Offset
 		position = position + self.offset
 
 		# Render Image
-		self.canvas.create_image(position.x, position.y, image = image, anchor = tk.NW)
+		self.canvas.create_image(position.x, position.y, image = image, anchor = Graphics.anchor[align])
 
 	def draw_rect(self, position, size, colour, fill):
 
@@ -40,13 +46,6 @@ class Graphics:
 		# Apply Offset
 		position = position + self.offset
 
-		# Anchor Position
-		anchor = {
-			Align.LEFT: tk.NW,
-			Align.CENTER: tk.CENTER,
-			Align.RIGHT: tk.NE
-		}[align]
-
 		# Default Font
 		if font is None: font = Graphics.text_default["font"]
 
@@ -55,10 +54,10 @@ class Graphics:
 
 		# Render Shadow
 		if shadow is not None:
-			self.canvas.create_text(position.x + 1, position.y + 1, text = text, font = font, fill = shadow, anchor = anchor)
+			self.canvas.create_text(position.x + 1, position.y + 1, text = text, font = font, fill = shadow, anchor = Graphics.anchor[align])
 
 		# Render Text
-		self.canvas.create_text(position.x, position.y, text = text, font = font, fill = colour, anchor = anchor)
+		self.canvas.create_text(position.x, position.y, text = text, font = font, fill = colour, anchor = Graphics.anchor[align])
 
 	def offset_graphics(self, offset):
 		return Graphics(self.canvas, self.offset + offset)
