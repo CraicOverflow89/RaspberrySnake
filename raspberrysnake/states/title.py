@@ -28,7 +28,7 @@ class StateTitle(State):
 	def render(self, gfx):
 
 		# Render Logo
-		gfx.draw_image(ImageLoader.load("logo"), Point(self.app.get_dimensions().width / 2, 40), Align.MIDDLE)
+		gfx.draw_image(ImageLoader.load("logo_solid"), Point(self.app.get_dimensions().width / 2, 40), Align.MIDDLE)
 
 		# Render Menu
 		self.menu.render(gfx)

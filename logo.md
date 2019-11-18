@@ -20,6 +20,7 @@ Raspberry
  - shadow
     - none
  - image
+    - alignment CENTERED
     - width 320px
 	- height 160px
 	- background
