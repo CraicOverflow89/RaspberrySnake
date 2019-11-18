@@ -7,6 +7,7 @@ class Controller:
 
 	def __init__(self, app):
 		self.app = app
+		self.joystick_active = False
 
 		# Action Queue
 		self.action_queue = ArrayList()
@@ -18,6 +19,7 @@ class Controller:
 
 			# Create Listener
 			pygame.joystick.Joystick(0).init()
+			self.joystick_active = True
 			self.listener_halt = Event()
 			self.listener_thread = Thread(target = self.listener, args = (self.listener_halt, self.action_queue), daemon = False)
 			self.listener_thread.start()
@@ -56,6 +58,7 @@ class Controller:
 							self.add_action(Action.UP)
 
 	def terminate(self):
-		self.listener_halt.set()
-		self.listener_thread.join()
+		if self.joystick_active is True:
+			self.listener_halt.set()
+			self.listener_thread.join()
 		pygame.quit()
