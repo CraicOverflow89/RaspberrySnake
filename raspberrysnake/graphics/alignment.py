@@ -1,6 +1,7 @@
 import enum
 
 class Align(enum.Enum):
-	LEFT = 0
-	CENTER = 1
-	RIGHT = 2
+	CENTER = 0
+	LEFT = 1
+	MIDDLE = 2
+	RIGHT = 3
