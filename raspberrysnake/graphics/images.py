@@ -1,4 +1,4 @@
-from tkinter import PhotoImage
+from PIL import Image, ImageTk
 
 class ImageLoader:
 	data = {}
@@ -7,7 +7,7 @@ class ImageLoader:
 
 		# Store Image
 		if image not in ImageLoader.data:
-			ImageLoader.data[image] = PhotoImage(file = "resources/" + image + ".gif")
+			ImageLoader.data[image] = ImageTk.PhotoImage(Image.open("resources/" + image + ".gif"))
 
 		# Return Image
 		return ImageLoader.data[image]
