@@ -6,6 +6,7 @@ from library.point import Point
 from states.about import StateAbout
 from states.game import StateGame
 from states.instructions import StateInstructions
+from states.intro import StateIntro
 from states.results import StateResults
 from states.title import StateTitle
 from tkinter import Canvas, Tk
@@ -21,6 +22,7 @@ class Application:
 	state_create = {
 		"ABOUT": StateAbout,
 		"GAME": StateGame,
+		"INTRO": StateIntro,
 		"INSTRUCTIONS": StateInstructions,
 		"RESULTS": StateResults,
 		"TITLE": StateTitle
