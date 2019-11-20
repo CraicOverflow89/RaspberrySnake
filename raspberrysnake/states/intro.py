@@ -16,7 +16,7 @@ class StateIntro(State):
 	def render(self, gfx):
 
 		# Render Logo
-		gfx.draw_image(ImageLoader.load("brand/rubusidaeus"), Point(self.app.get_dimensions().width / 2, self.app.get_dimensions().height / 2), Align.CENTER)
+		gfx.draw_image(ImageLoader.load("brand/riem_logo"), Point(self.app.get_dimensions().width / 2, self.app.get_dimensions().height / 2), Align.CENTER)
 
 		# Render Loading
 		# NOTE: when resources are preloaded, there should be an object that fires off these tasks
