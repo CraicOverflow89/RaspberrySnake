@@ -17,6 +17,7 @@ Development notes, tasks and ideas.
 ### Graphics
 
  - snake should be comprised of colours `#366E9D` and `#FFD84D`
+ - the RIEM logo is comprised of free graphics from [cleanpng](https://www.cleanpng.com) and [cooltext](https://cooltext.com)
 
 ### Sounds
 
