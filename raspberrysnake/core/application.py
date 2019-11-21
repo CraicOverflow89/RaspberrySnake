@@ -26,6 +26,7 @@ class Application:
 		"TITLE": StateTitle
 	}
 	highscore = 0
+	# NOTE: this is game specific
 
 	def __init__(self, state):
 
@@ -36,6 +37,7 @@ class Application:
 		# Create Application
 		self.app = Tk()
 		self.app.title("Raspberry Snake")
+		# NOTE: this is game specific
 		self.app.geometry("%dx%d" % (Application.size.width, Application.size.height))
 		self.app.resizable(False, False)
 
@@ -95,12 +97,14 @@ class Application:
 	def get_dimensions(self):
 		return Application.size
 
+	# NOTE: this is game specific
 	def get_score(self):
 		return Application.highscore
 
 	def get_version(self):
 		return Application.version
 
+	# NOTE: this is game specific
 	def new_score(self, value):
 		if value > Application.highscore:
 			Application.highscore = value
