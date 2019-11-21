@@ -1,4 +1,4 @@
-from riem.states import State
+from riem.core import State
 from riem.graphics import Align
 from riem.library import Point
 

@@ -1,5 +1,5 @@
 from game.engine import GameEngine
-from riem.states import State
+from riem.core import State
 
 class StateGame(State):
 

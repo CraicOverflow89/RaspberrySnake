@@ -8,8 +8,7 @@ from states.intro import StateIntro
 from states.results import StateResults
 from states.title import StateTitle
 from tkinter import Canvas, Tk
-import time
-import sys
+import sys, time
 
 class Application:
 

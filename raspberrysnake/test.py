@@ -1,5 +1,5 @@
 from riem.library import ArrayList
-from riem.states import State
+from riem.core import State
 import importlib, inspect, os, re
 
 def load(directory):
