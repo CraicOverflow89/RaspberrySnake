@@ -7,16 +7,14 @@ def load(directory):
 	# Module Logic
 	def load(module):
 
-		# List Classes
-		result = ArrayList(list(module.__dict__.keys())).filter(lambda it: inspect.isclass(getattr(module, it)))
+		# List Attributes
+		result = ArrayList(list(module.__dict__.keys())).reject(lambda it: it == "State")
 
 		# Map Classes
-		result = result.reject(lambda it: it == "State").map(lambda it: getattr(module, it))
-		# NOTE: could reject "State" then map getattr to remove repetition
-		#       instead of calling getattr for filter isclass AND map
+		result = result.map(lambda it: getattr(module, it))
 
 		# Return States
-		return result.filter(lambda it: issubclass(it, State))
+		return result.filter(lambda it: inspect.isclass(it) and issubclass(it, State))
 
 	# Directory Path
 	directory_path = os.path.join(os.getcwd(), directory)
