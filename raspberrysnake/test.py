@@ -18,15 +18,17 @@ def load(directory):
 		result = ArrayList(list(module.__dict__.keys())).reject(lambda it: it == "State")
 
 		# Map Classes
-		result = result.map(lambda it: getattr(module, it))
+		result = result.map(lambda it: (it, getattr(module, it)))
+		# NOTE: should maybe create tuple after map getattr and call method on it to get id for the name data
 
 		# Return States
-		return result.filter(lambda it: inspect.isclass(it) and issubclass(it, State))
+		return result.filter(lambda it: inspect.isclass(it[1]) and issubclass(it[1], State))
 
 	# Return States
-	result = ArrayList()
-	for state in file_list.map(lambda it: load_module(importlib.import_module("%s.%s" % (directory.split("/")[-1], it)))):
-		result = result.add_all(state)
+	result = {}
+	for module in file_list.map(lambda it: load_module(importlib.import_module("%s.%s" % (directory.split("/")[-1], it)))):
+		for name, state in module:
+			result[name] = state
 	return result
 
 print(load("raspberrysnake/states"))
