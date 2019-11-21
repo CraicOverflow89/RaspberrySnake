@@ -24,11 +24,10 @@ def load(directory):
 	# NOTE: current reject is not going to ignore directories
 
 	# Return States
-	return ArrayList(file_list.map(lambda it: load(importlib.import_module("%s.%s" % (directory.split("/")[-1], it)))))
-	# NOTE: construcrtor/add_all should be creating ArrayList<State>
-	#       but currently getting ArrayList<ArrayList<State>>
-	#       wrapping in list() doesn't work and shouldn't have to do that
-	#       check that arrays and ArrayList objects with only one element are still unpacked correctly
+	result = ArrayList()
+	for state in file_list.map(lambda it: load(importlib.import_module("%s.%s" % (directory.split("/")[-1], it)))):
+		result = result.add_all(state)
+	return result
 
 print(load("raspberrysnake/states"))
 # NOTE: would be better to not have to include subdirectory in project
