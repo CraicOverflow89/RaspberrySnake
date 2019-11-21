@@ -1,10 +1,7 @@
 from game.entities.entity import Entity
 from game.world import World
-from graphics.images import ImageLoader
-from library.dimensions import Dimensions
-from library.direction import Direction
-from library.list import ArrayList
-from library.point import Point
+from riem.graphics import ImageLoader
+from riem.library import ArrayList, Dimensions, Direction, Point
 
 class Snake(Entity):
 

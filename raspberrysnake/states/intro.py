@@ -1,7 +1,6 @@
-from core.states import State
-from graphics.alignment import Align
-from graphics.images import ImageLoader
-from library.point import Point
+from riem.states import State
+from riem.graphics import Align, ImageLoader, Menu
+from riem.library import Point
 
 # rubus idaeus ex machina
 

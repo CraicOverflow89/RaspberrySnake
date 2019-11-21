@@ -1,9 +1,6 @@
-from core.states import State
-from graphics.alignment import Align
-from graphics.images import ImageLoader
-from graphics.menu import Menu
-from library.dimensions import Dimensions
-from library.point import Point
+from riem.states import State
+from riem.graphics import Align, ImageLoader, Menu
+from riem.library import Dimensions, Point
 
 class StateTitle(State):
 

@@ -1,8 +1,6 @@
-from graphics.canvas import Graphics
-from input.controller import Controller
-from input.keyboard import Keyboard
-from library.dimensions import Dimensions
-from library.point import Point
+from riem.graphics import Graphics
+from riem.input import Controller, Keyboard
+from riem.library import Dimensions, Point
 from states.about import StateAbout
 from states.game import StateGame
 from states.instructions import StateInstructions

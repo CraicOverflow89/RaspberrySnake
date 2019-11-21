@@ -1,6 +1,4 @@
-from library.list import ArrayList
-from library.direction import Direction
-from library.point import Point
+from riem.library import ArrayList, Direction, Point
 
 class World:
 

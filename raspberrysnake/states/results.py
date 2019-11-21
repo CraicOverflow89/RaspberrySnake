@@ -1,7 +1,6 @@
-from core.states import State
-from graphics.alignment import Align
-from graphics.menu import Menu
-from library.point import Point
+from riem.states import State
+from riem.graphics import Align, Menu
+from riem.library import Point
 
 class StateResults(State):
 

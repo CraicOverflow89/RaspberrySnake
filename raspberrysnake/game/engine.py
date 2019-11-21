@@ -1,14 +1,11 @@
-from audio.sounds import SoundLoader
 from game.entities.fruit import Fruit
 from game.entities.obstacle import Obstacle
 from game.entities.snake import Snake
 from game.world import World
-from graphics.alignment import Align
-from input.action import Action
-from library.dimensions import Dimensions
-from library.direction import Direction
-from library.list import ArrayList
-from library.point import Point
+from riem.audio import SoundLoader
+from riem.graphics import Align
+from riem.input import Action
+from riem.library import ArrayList, Dimensions, Direction, Point
 import random
 import time
 

@@ -1,7 +1,6 @@
 from game.entities.entity import Entity
-from graphics.images import ImageLoader
-from library.dimensions import Dimensions
-from library.point import Point
+from riem.graphics import ImageLoader
+from riem.library import Dimensions, Point
 import random
 
 class Fruit(Entity):
