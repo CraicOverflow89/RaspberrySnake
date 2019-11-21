@@ -12,6 +12,8 @@ def load(directory):
 
 		# Map Classes
 		result = result.reject(lambda it: it == "State").map(lambda it: getattr(module, it))
+		# NOTE: could reject "State" then map getattr to remove repetition
+		#       instead of calling getattr for filter isclass AND map
 
 		# Return States
 		return result.filter(lambda it: issubclass(it, State))
