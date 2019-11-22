@@ -66,7 +66,7 @@ class GameEngine:
 		new_highscore = self.app.new_score(self.score)
 
 		# Create Event
-		self.state.add_event(1500, lambda: self.app.state_update("RESULTS", False, {
+		self.state.add_event(1500, lambda: self.app.state_update("StateResults", False, {
 			"score": self.score,
 			"time": time.time() - self.time_s,
 			"highest": new_highscore

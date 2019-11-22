@@ -5,12 +5,12 @@ from riem.library import Point
 class StateResults(State):
 
 	def __init__(self, app):
-		super().__init__(app, "RESULTS")
+		super().__init__(app)
 
 		# Create Menu
 		self.menu = Menu()
-		self.menu.add_option("Play Again", Point(290, 260), lambda: self.app.state_update("GAME"))
-		self.menu.add_option("Back to Title", Point(290, 290), lambda: self.app.state_update("TITLE"))
+		self.menu.add_option("Play Again", Point(290, 260), lambda: self.app.state_update("StateGame"))
+		self.menu.add_option("Back to Title", Point(290, 290), lambda: self.app.state_update("StateTitle"))
 
 	def on_action(self, action):
 

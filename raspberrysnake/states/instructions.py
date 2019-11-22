@@ -5,7 +5,7 @@ from riem.library import Point
 class StateInstructions(State):
 
 	def __init__(self, app):
-		super().__init__(app, "INSTRUCTIONS")
+		super().__init__(app)
 
 		# Create Information
 		self.info = []

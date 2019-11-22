@@ -4,7 +4,7 @@ from riem.core import State
 class StateGame(State):
 
 	def __init__(self, app):
-		super().__init__(app, "GAME")
+		super().__init__(app)
 		self.engine = GameEngine(app, self)
 
 	def on_action(self, action):

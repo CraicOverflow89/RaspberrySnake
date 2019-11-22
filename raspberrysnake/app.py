@@ -3,18 +3,16 @@ from riem.core import Application
 # Game Class
 class RaspberrySnake(Application):
 
-	# Constants
-	highscore = 0
-
 	def __init__(self):
-		super().__init__(self, "Raspberry Snake", "StateIntro", "raspberrysnake/states")
+		self.highscore = 0
+		super().__init__("Raspberry Snake", "StateTitle", "raspberrysnake/states")
 
 	def get_score(self):
-		return Application.highscore
+		return self.highscore
 
 	def new_score(self, value):
-		if value > Application.highscore:
-			Application.highscore = value
+		if value > self.highscore:
+			self.highscore = value
 			return True
 		return False
 

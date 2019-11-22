@@ -5,11 +5,11 @@ from riem.library import Dimensions, Point
 class StateTitle(State):
 
 	def __init__(self, app):
-		super().__init__(app, "TITLE")
+		super().__init__(app)
 		self.menu = Menu()
-		self.menu.add_option("Start", Point(290, 260), lambda: self.app.state_update("GAME"))
-		self.menu.add_option("How to Play", Point(290, 290), lambda: self.app.state_update("INSTRUCTIONS", True))
-		self.menu.add_option("About", Point(290, 320), lambda: self.app.state_update("ABOUT", True))
+		self.menu.add_option("Start", Point(290, 260), lambda: self.app.state_update("StateGame"))
+		self.menu.add_option("How to Play", Point(290, 290), lambda: self.app.state_update("StateInstructions", True))
+		self.menu.add_option("About", Point(290, 320), lambda: self.app.state_update("StateAbout", True))
 		self.menu.add_option("Exit", Point(290, 350), lambda: self.app.terminate())
 
 	def on_action(self, action):
