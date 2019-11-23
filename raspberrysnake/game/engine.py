@@ -27,7 +27,7 @@ class GameEngine:
 		self.paused = False
 		self.finish = False
 		self.score = 0
-		self.world = World(Dimensions(18, 13))
+		self.world = World(Dimensions(28, 20))
 		self.snake = None
 		self.fruit = ArrayList()
 		self.obstacle = ArrayList()
