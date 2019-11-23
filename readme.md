@@ -10,6 +10,7 @@ The following software is required to play the game;
  - Python 3 (version 3.8 or higher recommended)
  - playsound (install with pip `$ python -m pip install playsound` if you don't have it)
  - pygame (install with pip `$ python -m pip install pygame` if you don't have it)
+ - requests (install with pip `$ python -m pip install requests` if you don't have it)
  - riem (build from [the repo](https://github.com/CraicOverflow89/RIEM) then install with pip)
 
 ### Playing the Game
