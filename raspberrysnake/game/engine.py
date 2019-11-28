@@ -3,24 +3,25 @@ from game.entities.obstacle import Obstacle
 from game.entities.snake import Snake
 from game.world import World
 from riem.audio import SoundLoader
-from riem.graphics import Align
+from riem.core import Application, State
+from riem.graphics import Align, Graphics
 from riem.input import Action
 from riem.library import ArrayList, Dimensions, Direction, Point
-import random
-import time
+from typing import Dict
+import random, time
 
 class GameEngine:
 
 	# Constants
-	world_pos = Point(32, 48)
-	directional_action = {
+	world_pos: Point = Point(32, 48)
+	directional_action: Dict[Action, Direction] = {
 		Action.DOWN: Direction.SOUTH,
 		Action.LEFT: Direction.WEST,
 		Action.RIGHT: Direction.EAST,
 		Action.UP: Direction.NORTH
 	}
 
-	def __init__(self, app, state):
+	def __init__(self, app: Application, state: State) -> None:
 		self.app = app
 		self.state = state
 		self.time_s = time.time()
@@ -33,7 +34,7 @@ class GameEngine:
 		self.obstacle = ArrayList()
 		self.create_entities()
 
-	def create_entities(self):
+	def create_entities(self) -> None:
 
 		# Create Snake
 		self.snake = Snake(self, self.world)
@@ -44,17 +45,17 @@ class GameEngine:
 		# Create Obstacles
 		self.obstacle_spawn(6)
 
-	def empty_locations(self):
+	def empty_locations(self) -> ArrayList:
 
 		# Occupied Locations
-		snake_point = self.snake.get_position_list()
-		fruit_point = self.fruit.map(lambda it: it.get_position())
-		obstacle_point = self.obstacle.map(lambda it: it.get_position())
+		snake_point: ArrayList = self.snake.get_position_list()
+		fruit_point: ArrayList = self.fruit.map(lambda it: it.get_position())
+		obstacle_point: ArrayList = self.obstacle.map(lambda it: it.get_position())
 
 		# Empty Locations
 		return self.world.get_position_list().reject(lambda it: snake_point.contains(it)).reject(lambda it: fruit_point.contains(it)).reject(lambda it: obstacle_point.contains(it))
 
-	def end_game(self):
+	def end_game(self) -> None:
 
 		# Play Sound
 		SoundLoader.play("collision")
@@ -63,7 +64,7 @@ class GameEngine:
 		self.finish = True
 
 		# Record Score
-		new_highscore = self.app.new_score(self.score)
+		new_highscore: int = self.app.new_score(self.score)
 
 		# Create Event
 		self.state.add_event(1500, lambda: self.app.state_update("StateResults", False, {
@@ -72,7 +73,7 @@ class GameEngine:
 			"highest": new_highscore
 		}))
 
-	def fruit_collect(self, fruit):
+	def fruit_collect(self, fruit: Fruit) -> None:
 
 		# Play Sound
 		SoundLoader.play("collect")
@@ -89,18 +90,18 @@ class GameEngine:
 		# Spawn Fruit
 		self.fruit_spawn()
 
-	def fruit_spawn(self, count = 1):
+	def fruit_spawn(self, count: int = 1) -> None:
 
 		# Spawn Locations
-		spawn_point = self.empty_locations()
+		spawn_point: ArrayList = self.empty_locations()
 
 		# Create Fruit
-		for x in range(count):
-			spawn_final = spawn_point.get(random.randint(0, spawn_point.size() - 1))
+		for _ in range(count):
+			spawn_final: Point = spawn_point.get(random.randint(0, spawn_point.size() - 1))
 			spawn_point = spawn_point.remove(spawn_final)
 			self.fruit.add(Fruit(spawn_final))
 
-	def get_position_adjacent(self, position, direction):
+	def get_position_adjacent(self, position: Point, direction: Direction) -> Dict[Direction, Point]:
 		return {
 			Direction.EAST: position + Point(1, 0),
 			Direction.NORTH: position + Point(0, -1),
@@ -108,21 +109,21 @@ class GameEngine:
 			Direction.WEST: position + Point(-1, 0)
 		}[direction]
 
-	def is_obstacle(self, point):
+	def is_obstacle(self, point: Point) -> bool:
 		return self.obstacle.any(lambda it: it.get_position() == point)
 
-	def obstacle_spawn(self, count = 1):
+	def obstacle_spawn(self, count: int = 1) -> None:
 
 		# Spawn Locations
-		spawn_point = self.empty_locations()
+		spawn_point: ArrayList = self.empty_locations()
 
 		# Create Obstacles
-		for x in range(count):
-			spawn_final = spawn_point.get(random.randint(0, spawn_point.size() - 1))
+		for _ in range(count):
+			spawn_final: Point = spawn_point.get(random.randint(0, spawn_point.size() - 1))
 			spawn_point = spawn_point.remove(spawn_final)
 			self.obstacle.add(Obstacle(spawn_final))
 
-	def on_action(self, action):
+	def on_action(self, action: Action) -> None:
 
 		# Game Finished
 		if self.finish is True:
@@ -143,7 +144,7 @@ class GameEngine:
 		if action in GameEngine.directional_action.keys():
 			self.snake.face(GameEngine.directional_action[action])
 
-	def render(self, gfx):
+	def render(self, gfx: Graphics) -> None:
 
 		# Render Score
 		gfx.draw_text("Score %s" % self.score, Point(25, 10))
@@ -162,7 +163,7 @@ class GameEngine:
 		else:
 			gfx.draw_text("PAUSED", Point(self.app.get_dimensions().width / 2, self.app.get_dimensions().height / 2), Align.CENTER, "Inconsolata 22")
 
-	def render_game(self, gfx):
+	def render_game(self, gfx: Graphics) -> None:
 
 		# Render Snake
 		self.snake.render(gfx)
@@ -176,7 +177,7 @@ class GameEngine:
 		# Render World
 		self.world.render(gfx)
 
-	def tick(self):
+	def tick(self) -> None:
 
 		# Game Finished
 		if self.finish is True:
@@ -194,5 +195,5 @@ class GameEngine:
 			return
 
 		# Encounter Fruit
-		fruit_match = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())
+		fruit_match: ArrayList = self.fruit.first(lambda it: it.get_position() == self.snake.get_position())
 		if fruit_match is not None: self.fruit_collect(fruit_match)
