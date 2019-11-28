@@ -5,8 +5,6 @@ Development notes, tasks and ideas.
 
 ### Tasks
 
- - packaging
-    - split the `core.application` stuff into game specific code (stays here) and riem module
  - graphics
     - transparency
     - save canvas portion for rendering elsewhere?
