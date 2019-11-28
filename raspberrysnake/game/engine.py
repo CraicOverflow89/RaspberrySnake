@@ -101,7 +101,7 @@ class GameEngine:
 			spawn_point = spawn_point.remove(spawn_final)
 			self.fruit.add(Fruit(spawn_final))
 
-	def get_position_adjacent(self, position: Point, direction: Direction) -> Dict[Direction, Point]:
+	def get_position_adjacent(self, position: Point, direction: Direction) -> Point:
 		return {
 			Direction.EAST: position + Point(1, 0),
 			Direction.NORTH: position + Point(0, -1),

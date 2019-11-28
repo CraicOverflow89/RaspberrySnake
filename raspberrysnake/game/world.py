@@ -1,14 +1,15 @@
-from riem.library import ArrayList, Direction, Point
+from riem.graphics import Graphics
+from riem.library import ArrayList, Dimensions, Direction, Point
 
 class World:
 
-	def __init__(self, size):
+	def __init__(self, size) -> None:
 		self.size = size
 
-	def get_dimensions(self):
+	def get_dimensions(self) -> Dimensions:
 		return self.size
 
-	def get_direction_char(direction):
+	def get_direction_char(direction: Direction) -> str:
 		return {
 			Direction.EAST: "E",
 			Direction.NORTH: "N",
@@ -16,7 +17,7 @@ class World:
 			Direction.WEST: "W"
 		}[direction]
 
-	def get_direction_to(source, target):
+	def get_direction_to(source: Point, target: Point) -> Direction:
 		if target.x < source.x:
 			return Direction.WEST
 		elif target.x > source.x:
@@ -26,7 +27,7 @@ class World:
 		else:
 			return Direction.SOUTH
 
-	def get_direction_opposite(direction):
+	def get_direction_opposite(direction: Direction) -> Direction:
 		return {
 			Direction.EAST: Direction.WEST,
 			Direction.NORTH: Direction.SOUTH,
@@ -34,14 +35,14 @@ class World:
 			Direction.WEST: Direction.EAST
 		}[direction]
 
-	def get_position_list(self):
+	def get_position_list(self) -> ArrayList:
 		result = []
 		for x in range(self.size.width):
 			for y in range(self.size.height):
 				result.append(Point(x, y))
 		return ArrayList(result)
 
-	def render(self, gfx):
+	def render(self, gfx: Graphics) -> None:
 
 		# Render Border
 		gfx.draw_rect(Point(0, 0), self.size * 32, "white", False)
