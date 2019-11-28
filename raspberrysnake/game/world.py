@@ -1,5 +1,5 @@
 from riem.graphics import Graphics
-from riem.library import ArrayList, Dimensions, Direction, Point
+from riem.library import ArrayList, Colour, Dimensions, Direction, Point
 
 class World:
 
@@ -47,7 +47,7 @@ class World:
 	def render_background(self, gfx: Graphics) -> None:
 
 		# Render Background
-		gfx.draw_rect(self.render_point, self.render_size, "green", True)
+		gfx.draw_rect(self.render_point, self.render_size, Colour(112, 232, 66).to_hex(), True)
 
 	def render_foreground(self, gfx: Graphics) -> None:
 
