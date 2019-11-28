@@ -8,6 +8,8 @@ Development notes, tasks and ideas.
  - graphics
     - transparency for snake
     - save canvas portion for rendering elsewhere?
+    - tilesets
+       - see https://www.raywenderlich.com/3128-python-tutorial-how-to-generate-game-tiles-with-python-imaging-library
  - game
     - better graphics for snake
     - better graphics for fruit
