@@ -5,6 +5,8 @@ class World:
 
 	def __init__(self, size) -> None:
 		self.size = size
+		self.render_point: Point = Point(0, 0)
+		self.render_size: Dimensions = self.size * 32
 
 	def get_dimensions(self) -> Dimensions:
 		return self.size
@@ -42,7 +44,12 @@ class World:
 				result.append(Point(x, y))
 		return ArrayList(result)
 
-	def render(self, gfx: Graphics) -> None:
+	def render_background(self, gfx: Graphics) -> None:
+
+		# Render Background
+		gfx.draw_rect(self.render_point, self.render_size, "green", True)
+
+	def render_foreground(self, gfx: Graphics) -> None:
 
 		# Render Border
-		gfx.draw_rect(Point(0, 0), self.size * 32, "white", False)
+		gfx.draw_rect(self.render_point, self.render_size, "white", False)

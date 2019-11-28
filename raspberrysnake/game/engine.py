@@ -165,6 +165,9 @@ class GameEngine:
 
 	def render_game(self, gfx: Graphics) -> None:
 
+		# Render World Background
+		self.world.render_background(gfx)
+
 		# Render Snake
 		self.snake.render(gfx)
 
@@ -174,8 +177,8 @@ class GameEngine:
 		# Render Obstacles
 		self.obstacle.each(lambda it: it.render(gfx))
 
-		# Render World
-		self.world.render(gfx)
+		# Render World Foreground
+		self.world.render_foreground(gfx)
 
 	def tick(self) -> None:
 
