@@ -5,7 +5,7 @@ class RaspberrySnake(Application):
 
 	def __init__(self):
 		self.highscore = 0
-		super().__init__("Raspberry Snake", "StateTitle", "raspberrysnake/states")
+		super().__init__("Raspberry Snake", "StateTitle", "raspberrysnake/states", {"colour": "white", "font": "Inconsolata 14"})
 
 	def get_score(self):
 		return self.highscore
