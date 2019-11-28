@@ -20,6 +20,7 @@ Development notes, tasks and ideas.
 
  - snake should be comprised of colours `#366E9D` and `#FFD84D`
  - the RIEM logo is comprised of free graphics from [cleanpng](https://www.cleanpng.com) and [cooltext](https://cooltext.com)
+ - the Raspberry Snake icon was built from a clipped version of the logo using [this tool](https://hnet.com/png-to-ico/)
 
 ### Sounds
 
