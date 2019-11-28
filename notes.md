@@ -6,7 +6,7 @@ Development notes, tasks and ideas.
 ### Tasks
 
  - graphics
-    - transparency
+    - transparency for snake
     - save canvas portion for rendering elsewhere?
  - game
     - better graphics for snake
