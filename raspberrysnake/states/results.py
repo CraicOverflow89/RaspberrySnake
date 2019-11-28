@@ -1,10 +1,12 @@
-from riem.core import State
-from riem.graphics import Align, Menu
+from riem.core import Application, State
+from riem.graphics import Align, Graphics, Menu
+from riem.input import Action
 from riem.library import Point
+from typing import Dict
 
 class StateResults(State):
 
-	def __init__(self, app):
+	def __init__(self, app: Application) -> None:
 		super().__init__(app)
 
 		# Create Menu
@@ -12,17 +14,17 @@ class StateResults(State):
 		self.menu.add_option("Play Again", Point(290, 260), lambda: self.app.state_update("StateGame"))
 		self.menu.add_option("Back to Title", Point(290, 290), lambda: self.app.state_update("StateTitle"))
 
-	def on_action(self, action):
+	def on_action(self, action: Action) -> None:
 
 		# Menu Events
 		self.menu.on_action(action)
 
-	def on_start(self, data):
+	def on_start(self, data: Dict) -> None:
 
 		# Game Data
 		self.data = data
 
-	def render(self, gfx):
+	def render(self, gfx: Graphics) -> None:
 
 		# Render Title
 		self.render_title(gfx, "RESULTS")
@@ -42,5 +44,5 @@ class StateResults(State):
 		# Render Hint
 		self.render_hint(gfx, "Press UP/DOWN to navigate, ENTER to select.")
 
-	def tick(self):
+	def tick(self) -> None:
 		pass

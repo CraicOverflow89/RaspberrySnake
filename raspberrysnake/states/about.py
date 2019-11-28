@@ -1,10 +1,11 @@
-from riem.core import State
-from riem.graphics import Align, Menu
+from riem.core import Application, State
+from riem.graphics import Align, Graphics, Menu
+from riem.input import Action
 from riem.library import Point
 
 class StateAbout(State):
 
-	def __init__(self, app):
+	def __init__(self, app: Application) -> None:
 		super().__init__(app)
 
 		# Create Information
@@ -22,12 +23,12 @@ class StateAbout(State):
 		self.info.append("Sounds")
 		self.info.append("https://www.zapsplat.com/")
 
-	def on_action(self, action):
+	def on_action(self, action: Action) -> None:
 
 		# Title State
 		self.app.state_revert()
 
-	def render(self, gfx):
+	def render(self, gfx: Graphics) -> None:
 
 		# Render Title
 		self.render_title(gfx, "ABOUT")
@@ -39,5 +40,5 @@ class StateAbout(State):
 		# Render Hint
 		self.render_hint(gfx, "Press any key to return to title.")
 
-	def tick(self):
+	def tick(self) -> None:
 		pass
