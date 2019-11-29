@@ -10,20 +10,63 @@ class Snake(Entity):
 		# NOTE: cannot specify game as GameEngine due to partial initialisation
 		self.game = game
 		self.world = world
-		self.body = self.create_body()
+		Snake.tileset_data = self._create_tileset()
+		self.body = self._create_body()
 		self.direction = Direction.WEST
 		self.direction_next = None
 		self.grow_next = False
 		super().__init__(self.body.first().get_position(), Dimensions(32, 32))
 
-	def create_body(self) -> ArrayList:
+	def _create_body(self) -> ArrayList:
+
+		# Create Result
 		result: list = []
+
+		# Append Head
 		result.append(SnakePieceHead(self, Point(5, 3), Direction.WEST))
+
+		# Append Body
 		result.append(SnakePieceBody(self, Point(6, 3), Direction.WEST, Direction.EAST))
 		result.append(SnakePieceBody(self, Point(7, 3), Direction.WEST, Direction.SOUTH))
 		result.append(SnakePieceBody(self, Point(7, 4), Direction.NORTH, Direction.SOUTH))
 		result.append(SnakePieceBody(self, Point(7, 5), Direction.NORTH))
+
+		# Return Result
 		return ArrayList(result)
+
+	def _create_tileset(self):
+
+		# Create Result
+		result: Dict = {}
+
+		# Load Logic
+		def add(key: str, point: Point):
+			result[key] = ImageLoader.load("snake/tileset", Dimensions(32, 32), point)
+
+		# Load Pieces
+		add("body_EN", Point(0, 2))
+		add("body_ES", Point(1, 2))
+		add("body_EW", Point(0, 3))
+		add("body_NE", Point(0, 2))
+		add("body_NS", Point(1, 3))
+		add("body_NW", Point(2, 2))
+		add("body_SE", Point(1, 2))
+		add("body_SN", Point(3, 3))
+		add("body_SW", Point(3, 2))
+		add("body_WE", Point(2, 3))
+		add("body_WN", Point(2, 2))
+		add("body_WS", Point(3, 2))
+		add("head_E", Point(0, 0))
+		add("head_N", Point(1, 0))
+		add("head_S", Point(2, 0))
+		add("head_W", Point(3, 0))
+		add("tail_E", Point(0, 1))
+		add("tail_N", Point(1, 1))
+		add("tail_S", Point(2, 1))
+		add("tail_W", Point(3, 1))
+
+		# Return Result
+		return result
 
 	def face(self, direction: Direction) -> None:
 		if direction != World.get_direction_opposite(self.direction):
@@ -121,7 +164,7 @@ class SnakePiece():
 		return self.position
 
 	def render(self, gfx: Graphics) -> None:
-		gfx.draw_image(ImageLoader.load("snake/%s" % self.image), self.position * Point(self.snake.size.width, self.snake.size.height))
+		gfx.draw_image(Snake.tileset_data[self.image], self.position * Point(self.snake.size.width, self.snake.size.height))
 
 class SnakePieceBody(SnakePiece):
 
@@ -131,7 +174,7 @@ class SnakePieceBody(SnakePiece):
 			image: str = World.get_direction_char(direction_prev)
 		else:
 			type: str = "body"
-			image: str = "".join(sorted((World.get_direction_char(direction_prev), World.get_direction_char(direction_next))))
+			image: str = "".join([World.get_direction_char(direction_prev), World.get_direction_char(direction_next)])
 		super().__init__(snake, position, type, image)
 
 class SnakePieceHead(SnakePiece):
