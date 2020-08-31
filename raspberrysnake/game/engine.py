@@ -39,7 +39,7 @@ class GameEngine:
 		# Create Snake
 		self.snake = Snake(self, self.world)
 
-		# Create Friut
+		# Create Fruit
 		self.fruit_spawn(3)
 
 		# Create Obstacles
