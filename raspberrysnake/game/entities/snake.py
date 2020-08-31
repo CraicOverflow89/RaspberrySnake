@@ -155,7 +155,7 @@ class Snake(Entity):
 
 class SnakePiece():
 
-	def __init__(self, snake: Snake, position: Point, type: str, image) -> None:
+	def __init__(self, snake: Snake, position: Point, type: str, image str) -> None:
 		self.snake = snake
 		self.position = position
 		self.image = "%s_%s" % (type, image)
